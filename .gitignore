@@ -1,0 +1,7 @@
+*.vs
+*.Debug
+Debug
+.data
+x64
+obj
+bin

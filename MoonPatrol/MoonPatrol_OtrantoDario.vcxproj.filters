@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\GameManajer\gameManajer.cpp">
+      <Filter>GameManajer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuStates\Gameplay\gameplay.cpp">
+      <Filter>MenuStates\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objets\Player\player.cpp">
+      <Filter>Objets\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GameManajer">
+      <UniqueIdentifier>{e6ef09a4-47d4-4189-a93b-6d2a1f9c1450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objets">
+      <UniqueIdentifier>{3228272b-1bb6-42f3-9313-1e9f3e771c7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MenuStates">
+      <UniqueIdentifier>{0ec72472-9e4d-4f0f-8704-84d21bd447af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MenuStates\Gameplay">
+      <UniqueIdentifier>{5419a4dd-0753-4619-823a-ae5d638212dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objets\Player">
+      <UniqueIdentifier>{0d2c4eb1-6432-4980-af89-8aca878f3341}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\MenuStates\Gameplay\gameplay.h">
+      <Filter>MenuStates\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objets\Player\player.h">
+      <Filter>Objets\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameManajer\gameManajer.h">
+      <Filter>GameManajer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
