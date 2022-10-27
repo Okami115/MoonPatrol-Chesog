@@ -12,5 +12,5 @@ struct Player
 };
 
 Player initplayer();
-void movePlayer(Player player);
+void movePlayer(Player& player);
 void drawPlayer(Player player);

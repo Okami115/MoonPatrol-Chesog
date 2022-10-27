@@ -2,6 +2,6 @@
 #include "include/raylib.h"
 
 
-int gameplayLoop(bool initGame, bool backToMenu);
+int gameplayLoop(bool& initGame, bool backToMenu);
 void updateGameplay();
 void drawGameplay();

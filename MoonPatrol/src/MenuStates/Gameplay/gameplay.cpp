@@ -1,10 +1,11 @@
 #include "MenuStates/Gameplay/gameplay.h"
 #include "Objets/Player/player.h"
 #include "GameManajer/gameManajer.h"
+#include "include/raylib.h"
 
 static Player player;
 
-int gameplayLoop(bool initGame, bool backToMenu) 
+int gameplayLoop(bool& initGame, bool backToMenu) 
 {
 	if (initGame)
 	{
@@ -13,8 +14,8 @@ int gameplayLoop(bool initGame, bool backToMenu)
 		backToMenu = false;
 	}
 
-	drawGameplay();
 	updateGameplay();
+	drawGameplay();
 
 	return static_cast<int>(MenuStates::Gameplay);
 }
@@ -32,5 +33,8 @@ void updateGameplay()
 }
 void drawGameplay() 
 {
+	ClearBackground(BLACK);
+	BeginDrawing();
 	drawPlayer(player);
+	EndDrawing();
 }

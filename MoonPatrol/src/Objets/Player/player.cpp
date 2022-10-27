@@ -12,7 +12,7 @@ Player initplayer()
 
 	return aux;
 }
-void movePlayer(Player player) 
+void movePlayer(Player& player) 
 {
 	if (player.CurrentDirection == static_cast<float>(Directions::Down))
 	{
@@ -20,8 +20,10 @@ void movePlayer(Player player)
 	}
 	if (player.CurrentDirection == static_cast<float>(Directions::Up))
 	{
-		player.pos.y = static_cast<float>((GetScreenHeight() / 2) + player.height * 2);
+		player.pos.y = static_cast<float>((GetScreenHeight() / 2) - player.height * 2);
 	}
+
+	DrawText(TextFormat("Player pos Y : %f" , player.pos.y),1,1,20,RED);
 }
 void drawPlayer(Player player)
 {
