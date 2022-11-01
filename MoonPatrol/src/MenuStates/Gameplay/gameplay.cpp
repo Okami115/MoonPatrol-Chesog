@@ -86,7 +86,7 @@ void drawGameplay()
 
 	drawParallax();
 
-	DrawText(TextFormat("V 0.1"), 1, 1,40, RED);
+	DrawText(TextFormat("V 0.2"), 1, 1,40, RED);
 
 	drawPlayer(player);
 	drawObstacle(obstacle);
