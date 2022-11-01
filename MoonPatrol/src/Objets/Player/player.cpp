@@ -3,10 +3,11 @@
 Player initplayer() 
 {
 	Player aux;
-	aux.pos.x = static_cast<float>(GetScreenWidth() / 2);
-	aux.pos.y = static_cast<float>(GetScreenHeight() / 2);
+
 	aux.widht = 50.0f;
 	aux.height = 50.0f;
+	aux.pos.x = static_cast<float>(aux.widht + aux.widht/2);
+	aux.pos.y = static_cast<float>(GetScreenHeight() - aux.height / 2);
 	aux.CurrentDirection = static_cast<float>(Directions::Down);
 	aux.playerColor = GREEN;
 
@@ -16,14 +17,12 @@ void movePlayer(Player& player)
 {
 	if (player.CurrentDirection == static_cast<float>(Directions::Down))
 	{
-		player.pos.y = static_cast<float>(GetScreenHeight() / 2);
+		player.pos.y = static_cast<float>(GetScreenHeight() - (player.height + player.height / 4));
 	}
 	if (player.CurrentDirection == static_cast<float>(Directions::Up))
 	{
-		player.pos.y = static_cast<float>((GetScreenHeight() / 2) - player.height * 2);
+		player.pos.y = static_cast<float>(GetScreenHeight() - ((player.height + player.height / 4))*2);
 	}
-
-	DrawText(TextFormat("Player pos Y : %f" , player.pos.y),1,1,20,RED);
 }
 void drawPlayer(Player player)
 {

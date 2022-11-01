@@ -11,6 +11,9 @@
       <Filter>Objets\Player</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Objets\Obstacle\obstacle.cpp">
+      <Filter>Objets\Obstacle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameManajer">
@@ -28,6 +31,9 @@
     <Filter Include="Objets\Player">
       <UniqueIdentifier>{0d2c4eb1-6432-4980-af89-8aca878f3341}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objets\Obstacle">
+      <UniqueIdentifier>{11fff901-8179-4656-a2b7-3ec2f7dd4f81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MenuStates\Gameplay\gameplay.h">
@@ -38,6 +44,9 @@
     </ClInclude>
     <ClInclude Include="src\GameManajer\gameManajer.h">
       <Filter>GameManajer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objets\Obstacle\obstacle.h">
+      <Filter>Objets\Obstacle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

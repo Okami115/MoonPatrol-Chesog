@@ -158,11 +158,13 @@ XCOPY "$(SolutionDir)res" "$(SolutionDir)bin\$(Platform)\$(Configuration)\res" /
     <ClCompile Include="src\GameManajer\gameManajer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MenuStates\Gameplay\gameplay.cpp" />
+    <ClCompile Include="src\Objets\Obstacle\obstacle.cpp" />
     <ClCompile Include="src\Objets\Player\player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameManajer\gameManajer.h" />
     <ClInclude Include="src\MenuStates\Gameplay\gameplay.h" />
+    <ClInclude Include="src\Objets\Obstacle\obstacle.h" />
     <ClInclude Include="src\Objets\Player\player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

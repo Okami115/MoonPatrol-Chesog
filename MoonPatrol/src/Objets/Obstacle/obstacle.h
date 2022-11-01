@@ -2,15 +2,15 @@
 #include "include/raylib.h"
 #include "GameManajer/gameManajer.h"
 
-struct Player
+struct Obstacle
 {
 	Vector2 pos;
-	Color playerColor;
+	Color obstacleColor;
 	float height;
 	float widht;
 	float CurrentDirection;
 };
 
-Player initplayer();
-void movePlayer(Player& player);
-void drawPlayer(Player player);
+Obstacle initObstacle();
+void moveObstacle(Obstacle& currentObstacle);
+void drawObstacle(Obstacle currentObstacle);
