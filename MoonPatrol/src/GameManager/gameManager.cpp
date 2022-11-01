@@ -1,13 +1,16 @@
 #include "include/raylib.h"
 #include "GameManager/gameManager.h"
 #include "MenuStates/Gameplay/gameplay.h"
+#include "MenuStates/MainMenu/mainMenu.h"
 
 void executeGame() 
 {
 	int screenWidth = 1024;
 	int screenHeight = 768;
 
-	int menuAnsw = (int)MenuStates::Gameplay;
+	int menuAnsw = (int)MenuStates::MainMenu;
+	int point = 0;
+
 	bool backToMenu = false;
 	bool reset = true;
 
@@ -30,6 +33,7 @@ void executeGame()
 			backToMenu = false;
 			reset = true;
 			initGame = true;
+			menuAnsw = mainMenu(point);
 			break;
 		case (int)MenuStates::Gameplay:
 			menuAnsw = gameplayLoop(initGame, backToMenu);

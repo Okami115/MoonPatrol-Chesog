@@ -16,8 +16,9 @@ static float scrollingFore = 0.0f;
 
 float gravity = 500.0f;
 
-int gameplayLoop(bool& initGame, bool backToMenu) 
+int gameplayLoop(bool& initGame, bool& backToMenu) 
 {
+	HideCursor();
 	if (initGame)
 	{
 		player = initplayer();
@@ -27,7 +28,7 @@ int gameplayLoop(bool& initGame, bool backToMenu)
 		backToMenu = false;
 	}
 
-	updateGameplay();
+	updateGameplay(backToMenu);
 	drawGameplay();
 
 
@@ -42,11 +43,15 @@ int gameplayLoop(bool& initGame, bool backToMenu)
 	}
 }
 
-void updateGameplay() 
+void updateGameplay(bool& backToMenu)
 {
 	if (IsKeyDown(KEY_UP))
 	{
 		gravity = -500.0f;
+	}
+	if (IsKeyReleased(KEY_ESCAPE))
+	{
+		backToMenu = true;
 	}
 	else
 	{
@@ -58,7 +63,7 @@ void updateGameplay()
 	movePlayer(player);
 	moveObstacle(obstacle);
 	checkOutOfBounds();
-	checkColitions();
+	checkColitions(backToMenu);
 }
 
 void moveParallax() 
@@ -111,12 +116,12 @@ void drawParallax()
 	DrawTextureEx(foreground, Vector2 { foreground.width * 2 + scrollingFore, 70 }, 0.0f, 5.0f, WHITE);
 }
 
-void checkColitions() 
+void checkColitions(bool& backToMenu)
 {
-	playerObstacleColition(obstacle);
+	playerObstacleColition(obstacle,backToMenu);
 }
 
-void playerObstacleColition(Obstacle& currentObstacle)
+void playerObstacleColition(Obstacle& currentObstacle, bool& backToMenu)
 {
 	if (player.pos.x > currentObstacle.pos.x + currentObstacle.widht || player.pos.x + player.widht < currentObstacle.pos.x || player.pos.y > currentObstacle.pos.y + currentObstacle.height || player.pos.y + player.height < currentObstacle.pos.y)
 	{
@@ -128,6 +133,7 @@ void playerObstacleColition(Obstacle& currentObstacle)
 
 		int textLenght = MeasureText("Perdiste",40);
 		DrawText(TextFormat("Perdiste"),(GetScreenWidth() / 2) - (textLenght / 2),(GetScreenHeight() / 2) - 20 , 40, RED);
+		backToMenu = true;
 	}
 }
 

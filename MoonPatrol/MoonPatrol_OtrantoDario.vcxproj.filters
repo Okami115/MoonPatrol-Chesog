@@ -14,6 +14,8 @@
     <ClCompile Include="src\GameManager\gameManager.cpp">
       <Filter>GameManajer</Filter>
     </ClCompile>
+    <ClCompile Include="src\MenuStates\MainMenu\mainMenu.cpp" />
+    <ClCompile Include="src\Objets\Button\button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameManajer">
@@ -48,5 +50,7 @@
     <ClInclude Include="src\GameManager\gameManager.h">
       <Filter>GameManajer</Filter>
     </ClInclude>
+    <ClInclude Include="src\MenuStates\MainMenu\mainMenu.h" />
+    <ClInclude Include="src\Objets\Button\button.h" />
   </ItemGroup>
 </Project>
