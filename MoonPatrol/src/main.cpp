@@ -1,7 +1,7 @@
-#include "GameManajer/gameManajer.h"
+#include "GameManager/gameManager.h"
 
 int main() 
 {
-	ejecuteGame();
+	executeGame();
 	return 0;
 }

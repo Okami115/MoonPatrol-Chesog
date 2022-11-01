@@ -1,6 +1,6 @@
 #pragma once
 #include "include/raylib.h"
-#include "GameManajer/gameManajer.h"
+#include "GameManager/gameManager.h"
 
 struct Player
 {

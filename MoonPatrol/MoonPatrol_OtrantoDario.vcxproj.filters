@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\GameManajer\gameManajer.cpp">
-      <Filter>GameManajer</Filter>
-    </ClCompile>
     <ClCompile Include="src\MenuStates\Gameplay\gameplay.cpp">
       <Filter>MenuStates\Gameplay</Filter>
     </ClCompile>
@@ -13,6 +10,9 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Objets\Obstacle\obstacle.cpp">
       <Filter>Objets\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameManager\gameManager.cpp">
+      <Filter>GameManajer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,11 +42,11 @@
     <ClInclude Include="src\Objets\Player\player.h">
       <Filter>Objets\Player</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameManajer\gameManajer.h">
-      <Filter>GameManajer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Objets\Obstacle\obstacle.h">
       <Filter>Objets\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameManager\gameManager.h">
+      <Filter>GameManajer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

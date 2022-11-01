@@ -1,8 +1,8 @@
 #include "include/raylib.h"
-#include "GameManajer/gameManajer.h"
+#include "GameManager/gameManager.h"
 #include "MenuStates/Gameplay/gameplay.h"
 
-void ejecuteGame() 
+void executeGame() 
 {
 	int screenWidth = 1024;
 	int screenHeight = 768;
