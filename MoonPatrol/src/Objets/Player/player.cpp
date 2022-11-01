@@ -1,5 +1,7 @@
 #include "Objets/Player/player.h"
 
+extern float gravity;
+
 Player initplayer() 
 {
 	Player aux;
@@ -15,13 +17,11 @@ Player initplayer()
 }
 void movePlayer(Player& player) 
 {
-	if (player.CurrentDirection == static_cast<float>(Directions::Down))
+	player.pos.y = player.pos.y + gravity * GetFrameTime();
+
+	if (player.pos.y > static_cast<float>(GetScreenHeight() - (player.height + player.height / 2)))
 	{
-		player.pos.y = static_cast<float>(GetScreenHeight() - (player.height + player.height / 4));
-	}
-	if (player.CurrentDirection == static_cast<float>(Directions::Up))
-	{
-		player.pos.y = static_cast<float>(GetScreenHeight() - ((player.height + player.height / 4))*2);
+		player.pos.y = static_cast<float>(GetScreenHeight() - (player.height + player.height / 2));
 	}
 }
 void drawPlayer(Player player)
