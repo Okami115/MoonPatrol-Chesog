@@ -1,5 +1,8 @@
 #pragma once
 
 enum class MenuStates { MainMenu,Gameplay,Rules,Options,Credits,Exit};
-enum class Directions {Left,Right,Up,Down};
+enum class Directions {Left,Right,Up,Down,Stop};
+enum class EnemyType {Land,Flying
+};
+
 void executeGame();

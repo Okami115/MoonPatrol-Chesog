@@ -1,3 +1,4 @@
+#include <iostream>
 #include "include/raylib.h"
 #include "GameManager/gameManager.h"
 #include "MenuStates/Gameplay/gameplay.h"
@@ -13,8 +14,20 @@ static Texture2D far_buildings;
 static float scrollingBack = 0.0f;
 static float scrollingMid = 0.0f;
 static float scrollingFore = 0.0f;
+static float landEnemiesTimer = 3.0f;
+static float flyingEnemiesTimer = 10.0f;
+
+static int landEnemiesCounter = 0;
+static int flyingEnemiesCounter = 0;
+
 
 float gravity = 500.0f;
+
+void drawPlayerBullets();
+
+void checkInput(bool& backToMenu);
+
+void playerOutOfBounds();
 
 int gameplayLoop(bool& initGame, bool& backToMenu) 
 {
@@ -45,19 +58,36 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 
 void updateGameplay(bool& backToMenu)
 {
-	if (IsKeyDown(KEY_UP))
+	checkInput(backToMenu);
+	moveParallax();
+	movePlayer(player);
+	moveObstacle(obstacle);
+	for (int i = 0; i < playerMaxAmmo; i++)
+	{
+		if (player.playerAmmo[i].isActive)
+		{
+			moveBullet(player.playerAmmo[i]);
+		}
+	}
+	checkOutOfBounds();
+	checkColitions(backToMenu);
+}
+
+void checkInput(bool& backToMenu)
+{
+	if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
 	{
 		gravity = -500.0f;
 	}
-	if (IsKeyDown(KEY_DOWN))
+	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
 	{
 		gravity += 10.0f;
 	}
-	if (IsKeyDown(KEY_LEFT))
+	if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
 	{
 		player.CurrentDirection = static_cast<int>(Directions::Left);
 	}
-	if (IsKeyDown(KEY_RIGHT))
+	if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
 	{
 		player.CurrentDirection = static_cast<int>(Directions::Right);
 	}
@@ -71,7 +101,11 @@ void updateGameplay(bool& backToMenu)
 		{
 			if (!player.playerAmmo[i].isActive)
 			{
-				//shoot(player.playerAmmo[i], player);
+				shoot(player.playerAmmo[i], player);
+#if _DEBUG
+				std::cout << "Shoot " << std::endl;
+#endif // _DEBUG
+
 				break;
 			}
 		}
@@ -80,13 +114,6 @@ void updateGameplay(bool& backToMenu)
 	{
 		gravity += 500.0f * GetFrameTime();
 	}
-
-
-	moveParallax();
-	movePlayer(player);
-	moveObstacle(obstacle);
-	checkOutOfBounds();
-	checkColitions(backToMenu);
 }
 
 void moveParallax() 
@@ -113,6 +140,7 @@ void drawGameplay()
 
 	drawPlayer(player);
 	drawObstacle(obstacle);
+	drawPlayerBullets();
 
 	EndDrawing();
 }
@@ -139,6 +167,17 @@ void drawParallax()
 	DrawTextureEx(foreground, Vector2 { foreground.width * 2 + scrollingFore, 70 }, 0.0f, 5.0f, WHITE);
 }
 
+void drawPlayerBullets() 
+{
+	for (int i = 0; i < playerMaxAmmo; i++)
+	{
+		if (player.playerAmmo[i].isActive)
+		{
+			drawBullet(player.playerAmmo[i]);
+		}
+	}
+}
+
 void checkColitions(bool& backToMenu)
 {
 	playerObstacleColition(obstacle,backToMenu);
@@ -163,6 +202,7 @@ void playerObstacleColition(Obstacle& currentObstacle, bool& backToMenu)
 void checkOutOfBounds() 
 {
 	obstacleOutOfBounds(obstacle);
+	playerOutOfBounds();
 }
 
 void obstacleOutOfBounds(Obstacle& currentObstacle) 
@@ -170,6 +210,29 @@ void obstacleOutOfBounds(Obstacle& currentObstacle)
 	if (currentObstacle.pos.x < ( 0 - currentObstacle.widht))
 	{
 		currentObstacle.pos.x = GetScreenWidth() + currentObstacle.widht;
+	}
+}
+
+void playerOutOfBounds() 
+{
+	if (player.pos.x <= 0)
+	{
+		player.CurrentDirection = static_cast<float>(Directions::Stop);
+	}
+	if (player.pos.x + (player.widht) >= GetScreenWidth())
+	{
+		player.CurrentDirection = static_cast<float>(Directions::Stop);
+	}
+}
+
+void bulletOutOfBounds() 
+{
+	for (int i = 0; i < playerMaxAmmo; i++)
+	{
+		if (player.playerAmmo[i].position.y <= 0 && player.playerAmmo[i].isActive)
+		{
+			player.playerAmmo[i].isActive = false;
+		}
 	}
 }
 

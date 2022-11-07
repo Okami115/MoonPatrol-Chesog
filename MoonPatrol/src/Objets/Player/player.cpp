@@ -47,6 +47,10 @@ void movePlayer(Player& player)
 	{
 		player.pos.x += 200.0f * GetFrameTime();
 	}
+	if (player.CurrentDirection == static_cast<float>(Directions::Stop))
+	{
+		player.pos.x;
+	}
 }
 void drawPlayer(Player player)
 {

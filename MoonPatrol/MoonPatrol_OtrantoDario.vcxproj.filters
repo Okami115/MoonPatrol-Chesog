@@ -23,6 +23,9 @@
     <ClCompile Include="src\Objets\Bullet\bullet.cpp">
       <Filter>Objets\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="src\Objets\Enemy\enemy.cpp">
+      <Filter>Objets\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameManajer">
@@ -52,6 +55,9 @@
     <Filter Include="Objets\Bullet">
       <UniqueIdentifier>{5b0e3248-dbc3-4652-a1b2-547e5b59f975}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objets\Enemy">
+      <UniqueIdentifier>{15bc8534-d6ea-4787-9ab2-62b97eb5e018}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MenuStates\Gameplay\gameplay.h">
@@ -72,6 +78,11 @@
     <ClInclude Include="src\MenuStates\MainMenu\mainMenu.h">
       <Filter>MenuStates\MainMenu</Filter>
     </ClInclude>
-    <ClInclude Include="src\Objets\Bullet\bullet.h" />
+    <ClInclude Include="src\Objets\Enemy\enemy.h">
+      <Filter>Objets\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objets\Bullet\bullet.h">
+      <Filter>Objets\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

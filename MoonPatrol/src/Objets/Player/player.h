@@ -16,5 +16,6 @@ struct Player
 };
 
 Player initplayer();
+void shoot(Bullet& bullet, Player player);
 void movePlayer(Player& player);
 void drawPlayer(Player player);

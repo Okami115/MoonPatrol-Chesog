@@ -161,6 +161,7 @@ XCOPY "$(SolutionDir)res" "$(SolutionDir)bin\$(Platform)\$(Configuration)\res" /
     <ClCompile Include="src\MenuStates\MainMenu\mainMenu.cpp" />
     <ClCompile Include="src\Objets\Bullet\bullet.cpp" />
     <ClCompile Include="src\Objets\Button\button.cpp" />
+    <ClCompile Include="src\Objets\Enemy\enemy.cpp" />
     <ClCompile Include="src\Objets\Obstacle\obstacle.cpp" />
     <ClCompile Include="src\Objets\Player\player.cpp" />
   </ItemGroup>
@@ -170,6 +171,7 @@ XCOPY "$(SolutionDir)res" "$(SolutionDir)bin\$(Platform)\$(Configuration)\res" /
     <ClInclude Include="src\MenuStates\MainMenu\mainMenu.h" />
     <ClInclude Include="src\Objets\Bullet\bullet.h" />
     <ClInclude Include="src\Objets\Button\button.h" />
+    <ClInclude Include="src\Objets\Enemy\enemy.h" />
     <ClInclude Include="src\Objets\Obstacle\obstacle.h" />
     <ClInclude Include="src\Objets\Player\player.h" />
   </ItemGroup>
