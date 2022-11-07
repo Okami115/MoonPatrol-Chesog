@@ -7,15 +7,22 @@
     <ClCompile Include="src\Objets\Player\player.cpp">
       <Filter>Objets\Player</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Objets\Obstacle\obstacle.cpp">
       <Filter>Objets\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="src\GameManager\gameManager.cpp">
       <Filter>GameManajer</Filter>
     </ClCompile>
-    <ClCompile Include="src\MenuStates\MainMenu\mainMenu.cpp" />
-    <ClCompile Include="src\Objets\Button\button.cpp" />
+    <ClCompile Include="src\Objets\Button\button.cpp">
+      <Filter>Objets\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuStates\MainMenu\mainMenu.cpp">
+      <Filter>MenuStates\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Objets\Bullet\bullet.cpp">
+      <Filter>Objets\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameManajer">
@@ -36,6 +43,15 @@
     <Filter Include="Objets\Obstacle">
       <UniqueIdentifier>{11fff901-8179-4656-a2b7-3ec2f7dd4f81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objets\Button">
+      <UniqueIdentifier>{60efa2cc-d1af-48b1-9492-5f7bd6156d1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MenuStates\MainMenu">
+      <UniqueIdentifier>{5feb228d-8002-453c-b762-6bdfac48675f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objets\Bullet">
+      <UniqueIdentifier>{5b0e3248-dbc3-4652-a1b2-547e5b59f975}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MenuStates\Gameplay\gameplay.h">
@@ -50,7 +66,12 @@
     <ClInclude Include="src\GameManager\gameManager.h">
       <Filter>GameManajer</Filter>
     </ClInclude>
-    <ClInclude Include="src\MenuStates\MainMenu\mainMenu.h" />
-    <ClInclude Include="src\Objets\Button\button.h" />
+    <ClInclude Include="src\Objets\Button\button.h">
+      <Filter>Objets\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MenuStates\MainMenu\mainMenu.h">
+      <Filter>MenuStates\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objets\Bullet\bullet.h" />
   </ItemGroup>
 </Project>

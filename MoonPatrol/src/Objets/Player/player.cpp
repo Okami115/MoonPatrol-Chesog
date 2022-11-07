@@ -13,7 +13,23 @@ Player initplayer()
 	aux.CurrentDirection = static_cast<float>(Directions::Down);
 	aux.playerColor = GREEN;
 
+	for (int i = 0; i < playerMaxAmmo; i++)
+	{
+		initBullet(aux.playerAmmo[i]);
+	}
+
 	return aux;
+}
+void shoot(Bullet& bullet, Player player)
+{
+	//PlaySound(shotSound);
+
+	bullet.position.x = player.pos.x;
+	bullet.position.y = player.pos.y;
+	bullet.trayectory.y += 100.0f * GetFrameTime();
+
+	bullet.isActive = true;
+	//bullet.rotation = player.rotation;
 }
 void movePlayer(Player& player) 
 {
@@ -22,6 +38,14 @@ void movePlayer(Player& player)
 	if (player.pos.y > static_cast<float>(GetScreenHeight() - (player.height + player.height / 2)))
 	{
 		player.pos.y = static_cast<float>(GetScreenHeight() - (player.height + player.height / 2));
+	}
+	if (player.CurrentDirection == static_cast<float>(Directions::Left))
+	{
+		player.pos.x -= 200.0f * GetFrameTime();
+	}
+	if (player.CurrentDirection == static_cast<float>(Directions::Right))
+	{
+		player.pos.x += 200.0f * GetFrameTime();
 	}
 }
 void drawPlayer(Player player)

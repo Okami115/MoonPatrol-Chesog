@@ -49,9 +49,32 @@ void updateGameplay(bool& backToMenu)
 	{
 		gravity = -500.0f;
 	}
+	if (IsKeyDown(KEY_DOWN))
+	{
+		gravity += 10.0f;
+	}
+	if (IsKeyDown(KEY_LEFT))
+	{
+		player.CurrentDirection = static_cast<int>(Directions::Left);
+	}
+	if (IsKeyDown(KEY_RIGHT))
+	{
+		player.CurrentDirection = static_cast<int>(Directions::Right);
+	}
 	if (IsKeyReleased(KEY_ESCAPE))
 	{
 		backToMenu = true;
+	}
+	if (IsKeyPressed(KEY_SPACE))
+	{
+		for (int i = 0; i < playerMaxAmmo; i++)
+		{
+			if (!player.playerAmmo[i].isActive)
+			{
+				//shoot(player.playerAmmo[i], player);
+				break;
+			}
+		}
 	}
 	else
 	{

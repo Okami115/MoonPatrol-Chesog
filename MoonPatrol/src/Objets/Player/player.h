@@ -1,6 +1,9 @@
 #pragma once
 #include "include/raylib.h"
+#include "Objets/Bullet/bullet.h"
 #include "GameManager/gameManager.h"
+
+const int playerMaxAmmo = 100;
 
 struct Player
 {
@@ -9,6 +12,7 @@ struct Player
 	float height;
 	float widht;
 	float CurrentDirection;
+	Bullet playerAmmo[playerMaxAmmo];
 };
 
 Player initplayer();
