@@ -9,10 +9,12 @@ Player initplayer()
 	aux.widht = 50.0f;
 	aux.height = 20.0f;
 	aux.pos.x = aux.widht;
-	aux.pos.y = (floorHeight - aux.height / 2);
+	aux.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight;
 	aux.CurrentDirection = static_cast<float>(Directions::Down);
 	aux.playerColor = GREEN;
 	aux.speed = 200.0f;
+	aux.lives = 3;
+	aux.isHit = false;
 
 	for (int i = 0; i < playerMaxAmmo; i++)
 	{
@@ -36,9 +38,9 @@ void movePlayer(Player& player)
 {
 	player.pos.y = player.pos.y + gravity * GetFrameTime();
 
-	if (player.pos.y > static_cast<float>(GetScreenHeight() - (player.height + player.height / 2)))
+	if (player.pos.y > static_cast<float>(GetScreenHeight()) - floorHeight)
 	{
-		player.pos.y = static_cast<float>(GetScreenHeight() - (player.height + player.height / 2));
+		player.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight;
 	}
 	if (player.CurrentDirection == static_cast<float>(Directions::Left))
 	{

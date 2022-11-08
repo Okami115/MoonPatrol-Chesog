@@ -15,6 +15,10 @@ struct Player
 	float CurrentDirection;
 	float speed;
 
+	int lives;
+
+	bool isHit;
+
 	Bullet playerAmmo[playerMaxAmmo];
 };
 

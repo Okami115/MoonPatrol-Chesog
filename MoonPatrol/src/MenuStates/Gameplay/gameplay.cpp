@@ -31,7 +31,11 @@ void checkInput(bool& backToMenu);
 
 void playerOutOfBounds();
 
-int gameplayLoop(bool& initGame, bool& backToMenu) 
+void enemyOutOfBounds();
+
+void playerEnemyColition(Enemy& CurrentEnemy);
+
+int gameplayLoop(bool& initGame, bool& backToMenu)
 {
 	HideCursor();
 	if (initGame)
@@ -49,11 +53,20 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 		loadTextures();
 		initGame = false;
 		backToMenu = false;
+
+		landEnemiesTimer = 3.0f;
+		flyingEnemiesTimer = 10.0f;
+
+		landEnemiesCounter = 0;
+		flyingEnemiesCounter = 0;
 	}
 
 	updateGameplay(backToMenu);
 	drawGameplay();
-
+	if (player.lives <= 0)
+	{
+		backToMenu = true;
+	}
 
 	if (backToMenu)
 	{
@@ -68,13 +81,30 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 
 void updateGameplay(bool& backToMenu)
 {
-	if (landEnemiesTimer != 0)
-	{
-		if (landEnemiesCounter >= 3)
-		{
 
+  	if (landEnemiesCounter <= maxLandEnemies)
+	{
+		landEnemiesTimer -= GetFrameTime();
+		//std::cout << "Timer : " << landEnemiesTimer << std::endl;
+		if (landEnemiesTimer <= 0)
+		{
+			landEnemiesCounter++;
+			landEnemies[landEnemiesCounter].isAlctive = true;
+			landEnemiesTimer = 3.0f;
 		}
 	}
+	if (flyingEnemiesCounter <= maxFlyingEnemies)
+	{
+		flyingEnemiesTimer -= GetFrameTime();
+		std::cout << "Timer : " << flyingEnemiesTimer << std::endl;
+		if (flyingEnemiesTimer <= 0)
+		{
+			flyingEnemiesCounter++;
+			flyingEnemies[flyingEnemiesCounter].isAlctive = true;
+			flyingEnemiesTimer = 10.0f;
+		}
+	}
+
 	checkInput(backToMenu);
 	moveParallax();
 	movePlayer(player);
@@ -84,6 +114,20 @@ void updateGameplay(bool& backToMenu)
 		if (player.playerAmmo[i].isActive)
 		{
 			moveBullet(player.playerAmmo[i]);
+		}
+	}
+	for (int i = 0; i < maxLandEnemies; i++)
+	{
+		if (landEnemies[i].isAlctive)
+		{
+			moveEnemy(landEnemies[i]);
+		}
+	}
+	for (int i = 0; i < maxFlyingEnemies; i++)
+	{
+		if (flyingEnemies[i].isAlctive)
+		{
+			moveEnemy(flyingEnemies[i]);
 		}
 	}
 	checkOutOfBounds();
@@ -133,7 +177,7 @@ void checkInput(bool& backToMenu)
 	}
 }
 
-void moveParallax() 
+void moveParallax()
 {
 	scrollingBack -= 10.0f * GetFrameTime();
 	scrollingMid -= 50.0f * GetFrameTime();
@@ -146,45 +190,61 @@ void moveParallax()
 	if (scrollingFore <= -foreground.width * 3) scrollingFore = 0;
 }
 
-void drawGameplay() 
+void drawGameplay()
 {
 	ClearBackground(BLACK);
 	BeginDrawing();
 
 	drawParallax();
 
-	DrawText(TextFormat("V 0.2"), 1, 1,40, RED);
+	DrawText(TextFormat("V 0.2"), 1, 1, 40, RED);
 
 	drawPlayer(player);
 	drawObstacle(obstacle);
+	for (int i = 0; i < maxLandEnemies + 1; i++)
+	{
+		if (landEnemies[i].isAlctive)
+		{
+			drawEnemy(landEnemies[i]);
+		}
+	}
+	for (int i = 0; i < maxFlyingEnemies + 1; i++)
+	{
+		if (flyingEnemies[i].isAlctive)
+		{
+			drawEnemy(flyingEnemies[i]);
+		}
+	}
 	drawPlayerBullets();
+
+	DrawText(TextFormat("Lives %i",player.lives), 1,GetScreenHeight() - 30,20, YELLOW);
 
 	EndDrawing();
 }
 
-void drawParallax() 
+void drawParallax()
 {
 	ClearBackground(GetColor(0x052c46ff));
 
 	// Draw background image twice
 	// NOTE: Texture is scaled twice its size
-	DrawTextureEx(background, Vector2 { scrollingBack, 20 }, 0.0f, 5.0f, WHITE);
-	DrawTextureEx(background, Vector2 { background.width * 2 + scrollingBack, 20 }, 0.0f, 5.0f, WHITE);
+	DrawTextureEx(background, Vector2{ scrollingBack, 20 }, 0.0f, 5.0f, WHITE);
+	DrawTextureEx(background, Vector2{ background.width * 2 + scrollingBack, 20 }, 0.0f, 5.0f, WHITE);
 
 	// Draw midground image twice
-	DrawTextureEx(far_buildings, Vector2 { scrollingMid, 20 }, 0.0f, 5.0f, WHITE);
-	DrawTextureEx(far_buildings, Vector2 { far_buildings.width * 2 + scrollingMid, 20 }, 0.0f, 5.0f, WHITE);
+	DrawTextureEx(far_buildings, Vector2{ scrollingMid, 20 }, 0.0f, 5.0f, WHITE);
+	DrawTextureEx(far_buildings, Vector2{ far_buildings.width * 2 + scrollingMid, 20 }, 0.0f, 5.0f, WHITE);
 
 	// Draw midground image twice
-	DrawTextureEx(buildings, Vector2 { scrollingMid, 20 }, 0.0f, 5.0f, WHITE);
-	DrawTextureEx(buildings, Vector2 { buildings.width * 2 + scrollingMid, 20 }, 0.0f, 5.0f, WHITE);
+	DrawTextureEx(buildings, Vector2{ scrollingMid, 20 }, 0.0f, 5.0f, WHITE);
+	DrawTextureEx(buildings, Vector2{ buildings.width * 2 + scrollingMid, 20 }, 0.0f, 5.0f, WHITE);
 
 	// Draw foreground image twice
-	DrawTextureEx(foreground, Vector2 { scrollingFore, 70 }, 0.0f, 5.0f, WHITE);
-	DrawTextureEx(foreground, Vector2 { foreground.width * 2 + scrollingFore, 70 }, 0.0f, 5.0f, WHITE);
+	DrawTextureEx(foreground, Vector2{ scrollingFore, 70 }, 0.0f, 5.0f, WHITE);
+	DrawTextureEx(foreground, Vector2{ foreground.width * 2 + scrollingFore, 70 }, 0.0f, 5.0f, WHITE);
 }
 
-void drawPlayerBullets() 
+void drawPlayerBullets()
 {
 	for (int i = 0; i < playerMaxAmmo; i++)
 	{
@@ -197,7 +257,22 @@ void drawPlayerBullets()
 
 void checkColitions(bool& backToMenu)
 {
-	playerObstacleColition(obstacle,backToMenu);
+	playerObstacleColition(obstacle, backToMenu);
+
+	for (int i = 0; i < maxLandEnemies; i++)
+	{
+		if (landEnemies[i].isAlctive)
+		{
+			playerEnemyColition(landEnemies[i]);
+		}
+	}
+	for (int i = 0; i < maxFlyingEnemies; i++)
+	{
+		if (flyingEnemies[i].isAlctive)
+		{
+			playerEnemyColition(flyingEnemies[i]);
+		}
+	}
 }
 
 void playerObstacleColition(Obstacle& currentObstacle, bool& backToMenu)
@@ -210,27 +285,40 @@ void playerObstacleColition(Obstacle& currentObstacle, bool& backToMenu)
 	{
 		player.playerColor = YELLOW;
 
-		int textLenght = MeasureText("Perdiste",40);
-		DrawText(TextFormat("Perdiste"),(GetScreenWidth() / 2) - (textLenght / 2),(GetScreenHeight() / 2) - 20 , 40, RED);
+		int textLenght = MeasureText("Perdiste", 40);
+		DrawText(TextFormat("Perdiste"), (GetScreenWidth() / 2) - (textLenght / 2), (GetScreenHeight() / 2) - 20, 40, RED);
 		backToMenu = true;
 	}
 }
 
-void checkOutOfBounds() 
+void playerEnemyColition(Enemy& CurrentEnemy) 
+{
+	if (player.pos.x > CurrentEnemy.pos.x + CurrentEnemy.widht || player.pos.x + player.widht < CurrentEnemy.pos.x || player.pos.y > CurrentEnemy.pos.y + CurrentEnemy.height || player.pos.y + player.height < CurrentEnemy.pos.y)
+	{
+		player.playerColor = GREEN;
+	}
+	else
+	{
+		player.lives -= 1;
+	}
+}
+
+void checkOutOfBounds()
 {
 	obstacleOutOfBounds(obstacle);
 	playerOutOfBounds();
+	enemyOutOfBounds();
 }
 
-void obstacleOutOfBounds(Obstacle& currentObstacle) 
+void obstacleOutOfBounds(Obstacle& currentObstacle)
 {
-	if (currentObstacle.pos.x < ( 0 - currentObstacle.widht))
+	if (currentObstacle.pos.x < (0 - currentObstacle.widht))
 	{
 		currentObstacle.pos.x = GetScreenWidth() + currentObstacle.widht;
 	}
 }
 
-void playerOutOfBounds() 
+void playerOutOfBounds()
 {
 	if (player.pos.x <= 0)
 	{
@@ -242,7 +330,7 @@ void playerOutOfBounds()
 	}
 }
 
-void bulletOutOfBounds() 
+void bulletOutOfBounds()
 {
 	for (int i = 0; i < playerMaxAmmo; i++)
 	{
@@ -253,7 +341,41 @@ void bulletOutOfBounds()
 	}
 }
 
-void loadTextures() 
+void enemyOutOfBounds()
+{
+	for (int i = 0; i < maxLandEnemies; i++)
+	{
+		if (landEnemies[i].isAlctive && landEnemies[i].pos.x <= 0)
+		{
+			landEnemies[i].isAlctive = false;
+			landEnemiesCounter--;
+		}
+	}
+	for (int i = 0; i < maxFlyingEnemies; i++)
+	{
+		if (flyingEnemies[i].isAlctive)
+		{
+			if (flyingEnemies[i].pos.x >= static_cast<float>(GetScreenWidth()))
+			{
+				flyingEnemies[i].CurrentDirection.x = static_cast<float>(Directions::Left);
+			}
+			if (flyingEnemies[i].pos.x <= 0)
+			{
+				flyingEnemies[i].CurrentDirection.x = static_cast<float>(Directions::Right);
+			}
+			if (flyingEnemies[i].pos.y >= ceilingHeight * 5)
+			{
+				flyingEnemies[i].CurrentDirection.y = static_cast<float>(Directions::Up);
+			}
+			if (flyingEnemies[i].pos.y <= ceilingHeight)
+			{
+				flyingEnemies[i].CurrentDirection.y = static_cast<float>(Directions::Down);
+			}
+		}
+	}
+}
+
+void loadTextures()
 {
 	background = LoadTexture("res/skill-desc_0003_bg.png");
 	foreground = LoadTexture("res/skill-desc_0000_foreground.png");
@@ -261,7 +383,7 @@ void loadTextures()
 	far_buildings = LoadTexture("res/skill-desc_0002_far-buildings.png");
 }
 
-void unloadtextures() 
+void unloadtextures()
 {
 	UnloadTexture(background);
 	UnloadTexture(foreground);
