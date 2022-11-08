@@ -2,7 +2,7 @@
 #include "include/raylib.h"
 #include "Objets/Player/player.h"
 #include "Objets/Obstacle/obstacle.h"
-
+#include "Objets/Enemy/enemy.h"
 
 int gameplayLoop(bool& initGame, bool& backToMenu);
 void updateGameplay(bool& backToMenu);

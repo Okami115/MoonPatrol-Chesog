@@ -9,9 +9,12 @@ struct Player
 {
 	Vector2 pos;
 	Color playerColor;
+
 	float height;
 	float widht;
 	float CurrentDirection;
+	float speed;
+
 	Bullet playerAmmo[playerMaxAmmo];
 };
 

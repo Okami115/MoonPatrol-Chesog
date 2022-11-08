@@ -5,6 +5,8 @@
 
 static Player player;
 static Obstacle obstacle;
+static Enemy landEnemies[maxLandEnemies];
+static Enemy flyingEnemies[maxFlyingEnemies];
 
 static Texture2D background;
 static Texture2D foreground;
@@ -36,6 +38,14 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 	{
 		player = initplayer();
 		obstacle = initObstacle();
+		for (int i = 0; i < maxLandEnemies; i++)
+		{
+			landEnemies[i] = initEnemy(EnemyType::Land);
+		}
+		for (int i = 0; i < maxFlyingEnemies; i++)
+		{
+			flyingEnemies[i] = initEnemy(EnemyType::Flying);
+		}
 		loadTextures();
 		initGame = false;
 		backToMenu = false;
@@ -58,6 +68,13 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 
 void updateGameplay(bool& backToMenu)
 {
+	if (landEnemiesTimer != 0)
+	{
+		if (landEnemiesCounter >= 3)
+		{
+
+		}
+	}
 	checkInput(backToMenu);
 	moveParallax();
 	movePlayer(player);
