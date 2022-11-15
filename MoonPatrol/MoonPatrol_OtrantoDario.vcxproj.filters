@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\MenuStates\Gameplay\gameplay.cpp">
-      <Filter>MenuStates\Gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="src\Objets\Player\player.cpp">
       <Filter>Objets\Player</Filter>
     </ClCompile>
@@ -25,6 +22,9 @@
     </ClCompile>
     <ClCompile Include="src\Objets\Enemy\enemy.cpp">
       <Filter>Objets\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuStates\Gameplay\SinglePlayerGameplay.cpp">
+      <Filter>MenuStates\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,9 +60,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\MenuStates\Gameplay\gameplay.h">
-      <Filter>MenuStates\Gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="src\Objets\Player\player.h">
       <Filter>Objets\Player</Filter>
     </ClInclude>
@@ -83,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="src\Objets\Bullet\bullet.h">
       <Filter>Objets\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MenuStates\Gameplay\SinglePlayerGameplay.h">
+      <Filter>MenuStates\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

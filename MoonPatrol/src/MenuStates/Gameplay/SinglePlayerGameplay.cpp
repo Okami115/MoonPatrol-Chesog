@@ -1,7 +1,7 @@
 #include <iostream>
 #include "include/raylib.h"
 #include "GameManager/gameManager.h"
-#include "MenuStates/Gameplay/gameplay.h"
+#include "SinglePlayerGameplay.h"
 
 static Player player;
 //static Obstacle obstacle;
@@ -78,7 +78,7 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 	}
 	else
 	{
-		return static_cast<int>(MenuStates::Gameplay);
+		return static_cast<int>(MenuStates::SinglePlayer);
 	}
 }
 

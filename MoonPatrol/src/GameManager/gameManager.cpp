@@ -1,6 +1,6 @@
 #include "include/raylib.h"
 #include "GameManager/gameManager.h"
-#include "MenuStates/Gameplay/gameplay.h"
+#include "MenuStates/Gameplay/SinglePlayerGameplay.h"
 #include "MenuStates/MainMenu/mainMenu.h"
 
 void executeGame() 
@@ -35,7 +35,8 @@ void executeGame()
 			initGame = true;
 			menuAnsw = mainMenu(point);
 			break;
-		case (int)MenuStates::Gameplay:
+		case (int)MenuStates::SinglePlayer:
+		case (int)MenuStates::MultiPlayer:
 			menuAnsw = gameplayLoop(initGame, backToMenu);
 			break;
 		case (int)MenuStates::Rules:

@@ -13,7 +13,7 @@ Player initplayer()
 	aux.CurrentDirection = static_cast<float>(Directions::Down);
 	aux.playerColor = GREEN;
 	aux.speed = 200.0f;
-	aux.lives = 3;
+	aux.lives = 1;
 	aux.score = 0;
 	aux.isHit = false;
 	aux.onAir = false;
