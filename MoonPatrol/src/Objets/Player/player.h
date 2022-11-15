@@ -16,6 +16,7 @@ struct Player
 	float speed;
 
 	int lives;
+	int score;
 
 	bool isHit;
 

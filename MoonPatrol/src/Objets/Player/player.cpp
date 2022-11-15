@@ -14,6 +14,7 @@ Player initplayer()
 	aux.playerColor = GREEN;
 	aux.speed = 200.0f;
 	aux.lives = 3;
+	aux.score = 0;
 	aux.isHit = false;
 
 	for (int i = 0; i < playerMaxAmmo; i++)
@@ -27,8 +28,8 @@ void shoot(Bullet& bullet, Player player)
 {
 	//PlaySound(shotSound);
 
-	bullet.position.x = player.pos.x;
-	bullet.position.y = player.pos.y;
+	bullet.position.x = player.pos.x + (player.widht / 2);
+	bullet.position.y = player.pos.y + (player.height / 2);
 	bullet.trayectory.y += 100.0f * GetFrameTime();
 
 	bullet.isActive = true;

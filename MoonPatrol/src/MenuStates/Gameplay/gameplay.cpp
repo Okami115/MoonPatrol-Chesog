@@ -18,6 +18,7 @@ static float scrollingMid = 0.0f;
 static float scrollingFore = 0.0f;
 static float landEnemiesTimer = 3.0f;
 static float flyingEnemiesTimer = 10.0f;
+static float playerTimer = 2.0f;
 
 static int landEnemiesCounter = 0;
 static int flyingEnemiesCounter = 0;
@@ -34,6 +35,8 @@ void playerOutOfBounds();
 void enemyOutOfBounds();
 
 void playerEnemyColition(Enemy& CurrentEnemy);
+
+void bulletEnemyColition(Enemy& CurrentEnemy, Bullet& currentBullet);
 
 int gameplayLoop(bool& initGame, bool& backToMenu)
 {
@@ -82,26 +85,26 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 void updateGameplay(bool& backToMenu)
 {
 
-  	if (landEnemiesCounter <= maxLandEnemies)
+	if (landEnemiesCounter <= maxLandEnemies)
 	{
 		landEnemiesTimer -= GetFrameTime();
 		//std::cout << "Timer : " << landEnemiesTimer << std::endl;
 		if (landEnemiesTimer <= 0)
 		{
-			landEnemiesCounter++;
 			landEnemies[landEnemiesCounter].isAlctive = true;
 			landEnemiesTimer = 3.0f;
+			landEnemiesCounter++;
+			std::cout << "Enemigo Terrestre Creado" << std::endl;
 		}
 	}
 	if (flyingEnemiesCounter <= maxFlyingEnemies)
 	{
 		flyingEnemiesTimer -= GetFrameTime();
-		std::cout << "Timer : " << flyingEnemiesTimer << std::endl;
 		if (flyingEnemiesTimer <= 0)
 		{
-			flyingEnemiesCounter++;
 			flyingEnemies[flyingEnemiesCounter].isAlctive = true;
 			flyingEnemiesTimer = 10.0f;
+			flyingEnemiesCounter++;
 		}
 	}
 
@@ -128,6 +131,17 @@ void updateGameplay(bool& backToMenu)
 		if (flyingEnemies[i].isAlctive)
 		{
 			moveEnemy(flyingEnemies[i]);
+		}
+	}
+	if (player.isHit)
+	{
+		if (playerTimer <= 0)
+		{
+			player.isHit = false;
+		}
+		else
+		{
+			playerTimer -= GetFrameTime();
 		}
 	}
 	checkOutOfBounds();
@@ -217,7 +231,10 @@ void drawGameplay()
 	}
 	drawPlayerBullets();
 
-	DrawText(TextFormat("Lives %i",player.lives), 1,GetScreenHeight() - 30,20, YELLOW);
+	DrawText(TextFormat("Lives %i", player.lives), 1, GetScreenHeight() - 30, 20, YELLOW);
+
+	int scoreSize = MeasureText(TextFormat("Score %i", player.score),20);
+	DrawText(TextFormat("Score %i", player.score),(GetScreenWidth() / 2) - (scoreSize / 2),0, 20, YELLOW);
 
 	EndDrawing();
 }
@@ -273,6 +290,19 @@ void checkColitions(bool& backToMenu)
 			playerEnemyColition(flyingEnemies[i]);
 		}
 	}
+	for (int i = 0; i < maxFlyingEnemies; i++)
+	{
+		if (flyingEnemies[i].isAlctive)
+		{
+			for (int j = 0; j < playerMaxAmmo; j++)
+			{
+				if (player.playerAmmo[j].isActive)
+				{
+					bulletEnemyColition(flyingEnemies[i],player.playerAmmo[j]);
+				}
+			}
+		}
+	}
 }
 
 void playerObstacleColition(Obstacle& currentObstacle, bool& backToMenu)
@@ -283,15 +313,16 @@ void playerObstacleColition(Obstacle& currentObstacle, bool& backToMenu)
 	}
 	else
 	{
-		player.playerColor = YELLOW;
-
-		int textLenght = MeasureText("Perdiste", 40);
-		DrawText(TextFormat("Perdiste"), (GetScreenWidth() / 2) - (textLenght / 2), (GetScreenHeight() / 2) - 20, 40, RED);
-		backToMenu = true;
+		if (!player.isHit)
+		{
+			player.lives--;
+			player.isHit = true;
+		}
 	}
+	backToMenu = false;
 }
 
-void playerEnemyColition(Enemy& CurrentEnemy) 
+void playerEnemyColition(Enemy& CurrentEnemy)
 {
 	if (player.pos.x > CurrentEnemy.pos.x + CurrentEnemy.widht || player.pos.x + player.widht < CurrentEnemy.pos.x || player.pos.y > CurrentEnemy.pos.y + CurrentEnemy.height || player.pos.y + player.height < CurrentEnemy.pos.y)
 	{
@@ -299,7 +330,52 @@ void playerEnemyColition(Enemy& CurrentEnemy)
 	}
 	else
 	{
-		player.lives -= 1;
+		if (!player.isHit)
+		{
+			player.lives --;
+			player.isHit = true;
+		}
+	}
+}
+
+void bulletEnemyColition(Enemy& CurrentEnemy, Bullet& currentBullet)
+{
+
+	// temporary variables to set edges for testing
+	float testX = currentBullet.position.x;
+	float testY = currentBullet.position.y;
+
+	// which edge is closest?
+	if (currentBullet.position.x < CurrentEnemy.pos.x)
+	{
+		testX = CurrentEnemy.pos.x;      // test left edge
+	}
+	else if (currentBullet.position.x > CurrentEnemy.pos.x + CurrentEnemy.widht)
+	{
+		testX = CurrentEnemy.pos.x + CurrentEnemy.widht;   // right edge
+	}
+
+	if (currentBullet.position.y < CurrentEnemy.pos.y)
+	{
+		testY = CurrentEnemy.pos.y;      // top edge
+	}
+	else if (currentBullet.position.y > CurrentEnemy.pos.y + CurrentEnemy.height)
+	{
+		testY = CurrentEnemy.pos.y + CurrentEnemy.height;   // bottom edge
+	}
+
+	// get distance from closest edges
+	float distX = currentBullet.position.x - testX;
+	float distY = currentBullet.position.y - testY;
+	float distance = sqrt((distX * distX) + (distY * distY));
+
+	// if the distance is less than the radius, collision!
+	if (distance <= currentBullet.rad)
+	{
+		CurrentEnemy.isAlctive = false;
+		resetPosition(CurrentEnemy);
+		currentBullet.isActive = false;
+		player.score++;
 	}
 }
 
@@ -348,7 +424,19 @@ void enemyOutOfBounds()
 		if (landEnemies[i].isAlctive && landEnemies[i].pos.x <= 0)
 		{
 			landEnemies[i].isAlctive = false;
-			landEnemiesCounter--;
+			resetPosition(landEnemies[i]);
+			if (i == 0)
+			{
+				landEnemiesCounter = 0;
+			}
+			if (i == 1)
+			{
+				landEnemiesCounter = 1;
+			}
+			if (i == 2)
+			{
+				landEnemiesCounter = 2;
+			}
 		}
 	}
 	for (int i = 0; i < maxFlyingEnemies; i++)
