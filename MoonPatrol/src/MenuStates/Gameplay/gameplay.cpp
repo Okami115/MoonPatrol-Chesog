@@ -4,7 +4,7 @@
 #include "MenuStates/Gameplay/gameplay.h"
 
 static Player player;
-static Obstacle obstacle;
+//static Obstacle obstacle;
 static Enemy landEnemies[maxLandEnemies];
 static Enemy flyingEnemies[maxFlyingEnemies];
 
@@ -44,7 +44,7 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 	if (initGame)
 	{
 		player = initplayer();
-		obstacle = initObstacle();
+		//obstacle = initObstacle();
 		for (int i = 0; i < maxLandEnemies; i++)
 		{
 			landEnemies[i] = initEnemy(EnemyType::Land);
@@ -111,7 +111,7 @@ void updateGameplay(bool& backToMenu)
 	checkInput(backToMenu);
 	moveParallax();
 	movePlayer(player);
-	moveObstacle(obstacle);
+	//moveObstacle(obstacle);
 	for (int i = 0; i < playerMaxAmmo; i++)
 	{
 		if (player.playerAmmo[i].isActive)
@@ -145,7 +145,7 @@ void updateGameplay(bool& backToMenu)
 		}
 	}
 	checkOutOfBounds();
-	checkColitions(backToMenu);
+	checkColitions();
 }
 
 void checkInput(bool& backToMenu)
@@ -211,10 +211,10 @@ void drawGameplay()
 
 	drawParallax();
 
-	DrawText(TextFormat("V 0.2"), 1, 1, 40, RED);
+	DrawText(TextFormat("V 0.3"), 1, 1, 40, RED);
 
 	drawPlayer(player);
-	drawObstacle(obstacle);
+	//drawObstacle(obstacle);
 	for (int i = 0; i < maxLandEnemies + 1; i++)
 	{
 		if (landEnemies[i].isAlctive)
@@ -272,9 +272,9 @@ void drawPlayerBullets()
 	}
 }
 
-void checkColitions(bool& backToMenu)
+void checkColitions()
 {
-	playerObstacleColition(obstacle, backToMenu);
+	//playerObstacleColition(obstacle, backToMenu);
 
 	for (int i = 0; i < maxLandEnemies; i++)
 	{
@@ -381,7 +381,7 @@ void bulletEnemyColition(Enemy& CurrentEnemy, Bullet& currentBullet)
 
 void checkOutOfBounds()
 {
-	obstacleOutOfBounds(obstacle);
+	//obstacleOutOfBounds(obstacle);
 	playerOutOfBounds();
 	enemyOutOfBounds();
 }
@@ -424,6 +424,7 @@ void enemyOutOfBounds()
 		if (landEnemies[i].isAlctive && landEnemies[i].pos.x <= 0)
 		{
 			landEnemies[i].isAlctive = false;
+			player.score++;
 			resetPosition(landEnemies[i]);
 			if (i == 0)
 			{

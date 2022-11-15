@@ -11,7 +11,7 @@ void drawGameplay();
 void drawParallax();
 void checkOutOfBounds();
 void obstacleOutOfBounds(Obstacle& currentObstacle);
-void checkColitions(bool& backToMenu);
+void checkColitions();
 void playerObstacleColition(Obstacle& currentObstacle, bool& backToMenu);
 void loadTextures();
 void unloadtextures();
