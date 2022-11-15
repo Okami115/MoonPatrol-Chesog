@@ -16,6 +16,7 @@ Player initplayer()
 	aux.lives = 3;
 	aux.score = 0;
 	aux.isHit = false;
+	aux.onAir = false;
 
 	for (int i = 0; i < playerMaxAmmo; i++)
 	{

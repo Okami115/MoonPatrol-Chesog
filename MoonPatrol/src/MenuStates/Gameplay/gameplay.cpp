@@ -156,7 +156,7 @@ void checkInput(bool& backToMenu)
 	}
 	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
 	{
-		gravity += 10.0f;
+		gravity += 5.0f;
 	}
 	if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
 	{
@@ -170,7 +170,7 @@ void checkInput(bool& backToMenu)
 	{
 		backToMenu = true;
 	}
-	if (IsKeyPressed(KEY_SPACE))
+	if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 	{
 		for (int i = 0; i < playerMaxAmmo; i++)
 		{

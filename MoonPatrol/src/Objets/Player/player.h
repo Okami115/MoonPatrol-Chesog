@@ -19,6 +19,7 @@ struct Player
 	int score;
 
 	bool isHit;
+	bool onAir;
 
 	Bullet playerAmmo[playerMaxAmmo];
 };
