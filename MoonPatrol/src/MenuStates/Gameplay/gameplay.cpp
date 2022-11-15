@@ -152,7 +152,10 @@ void checkInput(bool& backToMenu)
 {
 	if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
 	{
-		gravity = -500.0f;
+		if (player.pos.y == static_cast<float>(GetScreenHeight()) - floorHeight)
+		{
+			gravity = -500.0f;
+		}
 	}
 	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
 	{
