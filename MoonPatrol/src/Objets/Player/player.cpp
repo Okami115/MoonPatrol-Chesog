@@ -32,8 +32,9 @@ void shoot(Bullet& bullet, Player player)
 	bullet.position.x = player.pos.x + (player.widht / 2);
 	bullet.position.y = player.pos.y + (player.height / 2);
 	bullet.trayectory.y += 100.0f * GetFrameTime();
-
 	bullet.isActive = true;
+	
+
 	//bullet.rotation = player.rotation;
 }
 void movePlayer(Player& player) 

@@ -183,8 +183,11 @@ void checkInput(bool& backToMenu)
 #if _DEBUG
 				std::cout << "Shoot " << std::endl;
 #endif // _DEBUG
-
 				break;
+			}
+			else if (player.playerAmmo[i].position.y < 0)
+			{
+				player.playerAmmo[i].isActive = false;
 			}
 		}
 	}
@@ -196,9 +199,9 @@ void checkInput(bool& backToMenu)
 
 void moveParallax()
 {
-	scrollingBack -= 10.0f * GetFrameTime();
-	scrollingMid -= 50.0f * GetFrameTime();
-	scrollingFore -= 100.0f * GetFrameTime();
+	scrollingBack -= 1000.0f * GetFrameTime();
+	scrollingMid -= 5000.0f * GetFrameTime();
+	scrollingFore -= 10000.0f * GetFrameTime();
 
 	// NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
 	if (scrollingBack <= -background.width * 3) scrollingBack = 0;

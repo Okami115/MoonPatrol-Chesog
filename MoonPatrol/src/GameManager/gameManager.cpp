@@ -40,10 +40,13 @@ void executeGame()
 			menuAnsw = gameplayLoop(initGame, backToMenu);
 			break;
 		case (int)MenuStates::Rules:
+			menuAnsw = (int)MenuStates::MainMenu;
 			break;
 		case (int)MenuStates::Credits:
+			menuAnsw = (int)MenuStates::MainMenu;
 			break;
 		case (int)MenuStates::Options:
+			menuAnsw = (int)MenuStates::MainMenu;
 			break;
 		case (int)MenuStates::Exit:
 			return;
