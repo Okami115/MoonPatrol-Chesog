@@ -16,11 +16,11 @@ struct Enemy
 
 	int lives;
 
-	bool isAlctive;
+	bool isActive;
 	bool isHit;
 };
 
 Enemy initEnemy(EnemyType enemyType);
-void resetPosition(Enemy& currentEnemy);
+void resetPosition(Enemy& currentEnemy, int& cuerrentEnemyActives);
 void drawEnemy(Enemy currentEnemy);
 void moveEnemy(Enemy& currentEnemy);

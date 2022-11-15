@@ -4,7 +4,7 @@ Enemy initEnemy(EnemyType enemyType)
 {
 	Enemy aux;
 	aux.enemyType = enemyType;
-	aux.isAlctive = false;
+	aux.isActive = false;
 	aux.isHit = false;
 
 	if (aux.enemyType == EnemyType::Land)
@@ -31,15 +31,16 @@ Enemy initEnemy(EnemyType enemyType)
 	}
 	return aux;
 }
-void resetPosition(Enemy& currentEnemy)
+void resetPosition(Enemy& currentEnemy, int& cuerrentEnemyActives)
 {
 	if (currentEnemy.enemyType == EnemyType::Land)
 	{
 		currentEnemy.pos.x = static_cast<float>(GetScreenWidth());
 		currentEnemy.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight;
 	}
-	else
+	else if (currentEnemy.enemyType == EnemyType::Flying)
 	{
+		cuerrentEnemyActives--;
 		currentEnemy.pos.x = 0;
 		currentEnemy.pos.y = ceilingHeight + currentEnemy.height / 2;
 	}
