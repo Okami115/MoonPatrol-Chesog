@@ -16,7 +16,7 @@ void executeGame()
 
 	extern bool isMultiplayer;
 
-	InitWindow(screenWidth, screenHeight, "Asteroids");
+	InitWindow(screenWidth, screenHeight, "Moon Patrol Chesog - OkamiDesu - V0.4");
 
 	HideCursor();
 	SetExitKey(KEY_NULL);

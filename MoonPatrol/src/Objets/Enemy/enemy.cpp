@@ -1,8 +1,8 @@
 #include "enemy.h"
 
-Enemy initEnemy(EnemyType enemyType) 
+Enemy initEnemy(EnemyType enemyType, bool isForPlayer2) 
 {
-	Enemy aux;
+	Enemy aux = {};
 	aux.enemyType = enemyType;
 	aux.isActive = false;
 	aux.isHit = false;
@@ -15,7 +15,14 @@ Enemy initEnemy(EnemyType enemyType)
 		aux.height = 20.0f;
 		aux.widht = 20.0f;
 		aux.pos.x = static_cast<float>(GetScreenWidth());
-		aux.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight ;
+		if (isForPlayer2)
+		{
+			aux.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight2;
+		}
+		else
+		{
+			aux.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight ;
+		}
 	}
 	else if (aux.enemyType == EnemyType::Flying)
 	{
@@ -31,12 +38,19 @@ Enemy initEnemy(EnemyType enemyType)
 	}
 	return aux;
 }
-void resetPosition(Enemy& currentEnemy, int& cuerrentEnemyActives)
+void resetPosition(Enemy& currentEnemy, int& cuerrentEnemyActives, bool isForPlayer2)
 {
 	if (currentEnemy.enemyType == EnemyType::Land)
 	{
 		currentEnemy.pos.x = static_cast<float>(GetScreenWidth());
-		currentEnemy.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight;
+		if (isForPlayer2)
+		{
+			currentEnemy.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight2;
+		}
+		else
+		{
+			currentEnemy.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight;
+		}
 	}
 	else if (currentEnemy.enemyType == EnemyType::Flying)
 	{

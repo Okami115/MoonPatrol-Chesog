@@ -54,11 +54,18 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 
 		for (int i = 0; i < maxLandEnemies; i++)
 		{
-			landEnemies[i] = initEnemy(EnemyType::Land);
+			if (i < maxLandEnemies / 2 && isMultiplayer)
+			{
+				landEnemies[i] = initEnemy(EnemyType::Land, true);
+			}
+			else
+			{
+				landEnemies[i] = initEnemy(EnemyType::Land, false);
+			}
 		}
 		for (int i = 0; i < maxFlyingEnemies; i++)
 		{
-			flyingEnemies[i] = initEnemy(EnemyType::Flying);
+			flyingEnemies[i] = initEnemy(EnemyType::Flying, false);
 		}
 		loadTextures();
 		initGame = false;
@@ -98,7 +105,7 @@ void updateGameplay(bool& backToMenu)
 		if (landEnemiesTimer < 0)
 		{
 			landEnemies[landEnemiesCounter].isActive = true;
-			landEnemiesTimer = 3.0f;
+			landEnemiesTimer = 2.0f;
 			landEnemiesCounter++;
 		}
 	}
@@ -227,7 +234,7 @@ void checkInput(bool& backToMenu)
 	{
 		if (IsKeyDown(KEY_UP))
 		{
-			if (player2.pos.y == static_cast<float>(GetScreenHeight()) - floorHeight)
+			if (player2.pos.y == static_cast<float>(GetScreenHeight()) - floorHeight2)
 			{
 				gravity2 = -500.0f;
 			}
@@ -286,7 +293,7 @@ void drawGameplay()
 
 	drawParallax();
 
-	DrawText(TextFormat("V 0.3"), 1, 1, 40, RED);
+	DrawText(TextFormat("V 0.4"), 5, 5, 10, RED);
 
 	drawPlayer(player);
 
@@ -497,7 +504,7 @@ void bulletEnemyColition(Enemy& CurrentEnemy, Bullet& currentBullet)
 	if (distance <= currentBullet.rad)
 	{
 		CurrentEnemy.isActive = false;
-		resetPosition(CurrentEnemy, flyingEnemiesCounter);
+		resetPosition(CurrentEnemy, flyingEnemiesCounter, false);
 		currentBullet.isActive = false;
 		player.score++;
 	}
@@ -568,7 +575,22 @@ void enemyOutOfBounds()
 		{
 			landEnemies[i].isActive = false;
 			player.score++;
-			resetPosition(landEnemies[i], flyingEnemiesCounter);
+			if (isMultiplayer)
+			{
+				if (landEnemies[i].pos.y == static_cast<float>(GetScreenHeight()) - floorHeight2)
+				{
+					resetPosition(landEnemies[i], flyingEnemiesCounter, false);
+				}
+				else
+				{
+					resetPosition(landEnemies[i], flyingEnemiesCounter, true);
+				}
+			}
+			else
+			{
+				resetPosition(landEnemies[i], flyingEnemiesCounter, false);
+			}
+
 			if (i == 0)
 			{
 				landEnemiesCounter = 0;

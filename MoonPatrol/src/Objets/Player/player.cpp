@@ -48,16 +48,20 @@ void movePlayer(Player& player, bool isPlayer2)
 	if (isPlayer2)
 	{
 		player.pos.y = player.pos.y + gravity2 * GetFrameTime();
+		if (player.pos.y > static_cast<float>(GetScreenHeight()) - floorHeight2)
+		{
+			player.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight2;
+		}
 	}
 	else
 	{
 		player.pos.y = player.pos.y + gravity * GetFrameTime();
+		if (player.pos.y > static_cast<float>(GetScreenHeight()) - floorHeight)
+		{
+			player.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight;
+		}
 	}
 
-	if (player.pos.y > static_cast<float>(GetScreenHeight()) - floorHeight)
-	{
-		player.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight;
-	}
 	if (player.CurrentDirection == static_cast<float>(Directions::Left))
 	{
 		player.pos.x -= player.speed * GetFrameTime();

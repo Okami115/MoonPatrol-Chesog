@@ -101,6 +101,7 @@ void drawMenu(int screenWidth, int screenHeight,int& point)
 	ClearBackground(BLACK);
 
 	DrawText("Moon Lander", (screenWidth / 2) - (textSizeTitle / 2), fontSize, fontSize, RED);
+	DrawText("V0.4", 5, 5, 10, RED);
 
 	if (point == (int)MenuStates::SinglePlayer)
 	{

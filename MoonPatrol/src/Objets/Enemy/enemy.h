@@ -20,7 +20,7 @@ struct Enemy
 	bool isHit;
 };
 
-Enemy initEnemy(EnemyType enemyType);
-void resetPosition(Enemy& currentEnemy, int& cuerrentEnemyActives);
+Enemy initEnemy(EnemyType enemyType, bool isForPlayer2);
+void resetPosition(Enemy& currentEnemy, int& cuerrentEnemyActives, bool isForPlayer2);
 void drawEnemy(Enemy currentEnemy);
 void moveEnemy(Enemy& currentEnemy);
