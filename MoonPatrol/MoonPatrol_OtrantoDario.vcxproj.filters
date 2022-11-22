@@ -23,7 +23,7 @@
     <ClCompile Include="src\Objets\Enemy\enemy.cpp">
       <Filter>Objets\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="src\MenuStates\Gameplay\SinglePlayerGameplay.cpp">
+    <ClCompile Include="src\MenuStates\Gameplay\GamePlay.cpp">
       <Filter>MenuStates\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
@@ -81,7 +81,7 @@
     <ClInclude Include="src\Objets\Bullet\bullet.h">
       <Filter>Objets\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="src\MenuStates\Gameplay\SinglePlayerGameplay.h">
+    <ClInclude Include="src\MenuStates\Gameplay\GamePlay.h">
       <Filter>MenuStates\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>

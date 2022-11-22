@@ -7,8 +7,7 @@ void initBullet(Bullet& currentBullet)
 	currentBullet.speed = { 500.0f,500.0f };
 	currentBullet.rad = 4.0f;
 	currentBullet.isActive = false;
-	//currentBullet.bulletTexture = bulletTexture;
-	currentBullet.color = LIME;
+	currentBullet.color = VIOLET;
 
 }
 

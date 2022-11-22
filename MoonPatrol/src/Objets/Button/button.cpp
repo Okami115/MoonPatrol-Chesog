@@ -4,7 +4,7 @@
 
 Button initButton(int initialPosX, int initialPosY, int fontSize, int buttonWidth, int buttonHeight, int optionNumber, string text, Color buttonColor, Color selectionColor)
 {
-	Button aux;
+	Button aux = {};
 	aux.rect.x = static_cast<float>(initialPosX);
 	aux.rect.y = static_cast<float>(initialPosY);
 	aux.fontSize = fontSize;

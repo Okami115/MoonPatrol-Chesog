@@ -28,26 +28,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -157,7 +157,7 @@ XCOPY "$(SolutionDir)res" "$(SolutionDir)bin\$(Platform)\$(Configuration)\res" /
   <ItemGroup>
     <ClCompile Include="src\GameManager\gameManager.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\MenuStates\Gameplay\SinglePlayerGameplay.cpp" />
+    <ClCompile Include="src\MenuStates\Gameplay\GamePlay.cpp" />
     <ClCompile Include="src\MenuStates\MainMenu\mainMenu.cpp" />
     <ClCompile Include="src\Objets\Bullet\bullet.cpp" />
     <ClCompile Include="src\Objets\Button\button.cpp" />
@@ -167,7 +167,7 @@ XCOPY "$(SolutionDir)res" "$(SolutionDir)bin\$(Platform)\$(Configuration)\res" /
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameManager\gameManager.h" />
-    <ClInclude Include="src\MenuStates\Gameplay\SinglePlayerGameplay.h" />
+    <ClInclude Include="src\MenuStates\Gameplay\GamePlay.h" />
     <ClInclude Include="src\MenuStates\MainMenu\mainMenu.h" />
     <ClInclude Include="src\Objets\Bullet\bullet.h" />
     <ClInclude Include="src\Objets\Button\button.h" />

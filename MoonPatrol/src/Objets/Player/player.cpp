@@ -1,22 +1,33 @@
 #include "Objets/Player/player.h"
 
 extern float gravity;
+extern float gravity2;
 
-Player initplayer() 
+Player initplayer(bool isPlayer2) 
 {
-	Player aux;
+	Player aux = {};
 
 	aux.widht = 50.0f;
 	aux.height = 20.0f;
-	aux.pos.x = aux.widht;
-	aux.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight;
-	aux.CurrentDirection = static_cast<float>(Directions::Down);
-	aux.playerColor = GREEN;
 	aux.speed = 200.0f;
 	aux.lives = 1;
 	aux.score = 0;
 	aux.isHit = false;
 	aux.onAir = false;
+	if (isPlayer2)
+	{
+		aux.pos.x = aux.widht;
+		aux.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight - aux.height * 3;
+		aux.CurrentDirection = static_cast<float>(Directions::Down);
+		aux.playerColor = BLUE;
+	}
+	else
+	{
+		aux.pos.x = aux.widht;
+		aux.pos.y = static_cast<float>(GetScreenHeight()) - floorHeight;
+		aux.CurrentDirection = static_cast<float>(Directions::Down);
+		aux.playerColor = GREEN;
+	}
 
 	for (int i = 0; i < playerMaxAmmo; i++)
 	{
@@ -27,19 +38,21 @@ Player initplayer()
 }
 void shoot(Bullet& bullet, Player player)
 {
-	//PlaySound(shotSound);
-
 	bullet.position.x = player.pos.x + (player.widht / 2);
 	bullet.position.y = player.pos.y + (player.height / 2);
 	bullet.trayectory.y += 100.0f * GetFrameTime();
 	bullet.isActive = true;
-	
-
-	//bullet.rotation = player.rotation;
 }
-void movePlayer(Player& player) 
+void movePlayer(Player& player, bool isPlayer2) 
 {
-	player.pos.y = player.pos.y + gravity * GetFrameTime();
+	if (isPlayer2)
+	{
+		player.pos.y = player.pos.y + gravity2 * GetFrameTime();
+	}
+	else
+	{
+		player.pos.y = player.pos.y + gravity * GetFrameTime();
+	}
 
 	if (player.pos.y > static_cast<float>(GetScreenHeight()) - floorHeight)
 	{

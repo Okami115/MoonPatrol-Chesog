@@ -24,7 +24,7 @@ struct Player
 	Bullet playerAmmo[playerMaxAmmo];
 };
 
-Player initplayer();
+Player initplayer(bool isPlayer2);
 void shoot(Bullet& bullet, Player player);
-void movePlayer(Player& player);
+void movePlayer(Player& player, bool isPlayer2);
 void drawPlayer(Player player);

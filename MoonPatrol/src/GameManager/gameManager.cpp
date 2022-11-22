@@ -1,6 +1,6 @@
 #include "include/raylib.h"
 #include "GameManager/gameManager.h"
-#include "MenuStates/Gameplay/SinglePlayerGameplay.h"
+#include "MenuStates/Gameplay/GamePlay.h"
 #include "MenuStates/MainMenu/mainMenu.h"
 
 void executeGame() 
@@ -14,7 +14,7 @@ void executeGame()
 	bool backToMenu = false;
 	bool reset = true;
 
-
+	extern bool isMultiplayer;
 
 	InitWindow(screenWidth, screenHeight, "Asteroids");
 
@@ -32,11 +32,13 @@ void executeGame()
 		case (int)MenuStates::MainMenu:
 			backToMenu = false;
 			reset = true;
+			isMultiplayer = false;
 			initGame = true;
 			menuAnsw = mainMenu(point);
 			break;
-		case (int)MenuStates::SinglePlayer:
 		case (int)MenuStates::MultiPlayer:
+			isMultiplayer = true;
+		case (int)MenuStates::SinglePlayer:
 			menuAnsw = gameplayLoop(initGame, backToMenu);
 			break;
 		case (int)MenuStates::Rules:
