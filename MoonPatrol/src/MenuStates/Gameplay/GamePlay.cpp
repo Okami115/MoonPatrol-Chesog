@@ -25,6 +25,7 @@ static float playerTimer = 2.0f;
 static int landEnemiesCounter = 0;
 static int flyingEnemiesCounter = 0;
 
+bool isPause;
 
 float gravity = 500.0f;
 float gravity2 = 500.0f;
@@ -120,7 +121,6 @@ void updateGameplay(bool& backToMenu)
 			flyingEnemiesCounter++;
 		}
 	}
-
 
 	checkInput(backToMenu);
 	moveParallax();
@@ -320,7 +320,7 @@ void drawGameplay()
 	DrawText(TextFormat("Lives %i", player.lives), 1, GetScreenHeight() - 30, 20, YELLOW);
 
 	int scoreSize = MeasureText(TextFormat("Score %i", player.score),20);
-	DrawText(TextFormat("Score %i", player.score),(GetScreenWidth() / 2) - (scoreSize / 2),0, 20, YELLOW);
+	DrawText(TextFormat("Score %i", player.score * 100),(GetScreenWidth() / 2) - (scoreSize / 2),0, 20, YELLOW);
 
 	EndDrawing();
 }
