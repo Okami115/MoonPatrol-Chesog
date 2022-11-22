@@ -19,7 +19,7 @@ static float scrollingBack = 0.0f;
 static float scrollingMid = 0.0f;
 static float scrollingFore = 0.0f;
 static float landEnemiesTimer = 3.0f;
-static float flyingEnemiesTimer = 10.0f;
+static float flyingEnemiesTimer = 5.0f;
 static float playerTimer = 2.0f;
 
 static int landEnemiesCounter = 0;
@@ -92,10 +92,10 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 void updateGameplay(bool& backToMenu)
 {
 
-	if (landEnemiesCounter <= maxLandEnemies)
+	if (landEnemiesCounter < maxLandEnemies)
 	{
 		landEnemiesTimer -= GetFrameTime();
-		if (landEnemiesTimer <= 0)
+		if (landEnemiesTimer < 0)
 		{
 			landEnemies[landEnemiesCounter].isActive = true;
 			landEnemiesTimer = 3.0f;
@@ -103,16 +103,17 @@ void updateGameplay(bool& backToMenu)
 		}
 	}
 
-	if (flyingEnemiesCounter <= maxFlyingEnemies)
+	if (flyingEnemiesCounter < maxFlyingEnemies)
 	{
 		flyingEnemiesTimer -= GetFrameTime();
-		if (flyingEnemiesTimer <= 0)
+		if (flyingEnemiesTimer < 0)
 		{
-			flyingEnemiesTimer = 1.0f;
 			flyingEnemies[flyingEnemiesCounter].isActive = true;
+			flyingEnemiesTimer = 5.0f;
 			flyingEnemiesCounter++;
 		}
 	}
+
 
 	checkInput(backToMenu);
 	moveParallax();
