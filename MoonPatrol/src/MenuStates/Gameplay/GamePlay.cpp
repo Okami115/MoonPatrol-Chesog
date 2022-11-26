@@ -99,91 +99,97 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 
 void updateGameplay(bool& backToMenu)
 {
-
-	if (landEnemiesCounter < maxLandEnemies)
+	if (isPause)
 	{
-		landEnemiesTimer -= GetFrameTime();
-		if (landEnemiesTimer < 0)
-		{
-			landEnemies[landEnemiesCounter].isActive = true;
-			landEnemiesTimer = 2.0f;
-			landEnemiesCounter++;
-		}
+
 	}
-
-	if (flyingEnemiesCounter < maxFlyingEnemies)
+	else
 	{
-		flyingEnemiesTimer -= GetFrameTime();
-		if (flyingEnemiesTimer < 0)
+		if (landEnemiesCounter < maxLandEnemies)
 		{
-			flyingEnemies[flyingEnemiesCounter].isActive = true;
-			flyingEnemiesTimer = 5.0f;
-			flyingEnemiesCounter++;
-		}
-	}
-
-	checkInput(backToMenu);
-	moveParallax();
-	movePlayer(player, false);
-	if (isMultiplayer)
-	{
-		movePlayer(player2, true);
-	}
-
-	for (int i = 0; i < playerMaxAmmo; i++)
-	{
-		if (player.playerAmmo[i].isActive)
-		{
-			moveBullet(player.playerAmmo[i]);
-		}
-
-		if (isMultiplayer)
-		{
-			if (player2.playerAmmo[i].isActive)
+			landEnemiesTimer -= GetFrameTime();
+			if (landEnemiesTimer < 0)
 			{
-				moveBullet(player2.playerAmmo[i]);
+				landEnemies[landEnemiesCounter].isActive = true;
+				landEnemiesTimer = 2.0f;
+				landEnemiesCounter++;
 			}
 		}
-	}
-	for (int i = 0; i < maxLandEnemies; i++)
-	{
-		if (landEnemies[i].isActive)
-		{
-			moveEnemy(landEnemies[i]);
-		}
-	}
-	for (int i = 0; i < maxFlyingEnemies; i++)
-	{
-		if (flyingEnemies[i].isActive)
-		{
-			moveEnemy(flyingEnemies[i]);
-		}
-	}
-	if (player.isHit)
-	{
-		if (playerTimer <= 0)
-		{
-			player.isHit = false;
-		}
-		else
-		{
-			playerTimer -= GetFrameTime();
-		}
-	}
 
-	if (player2.isHit && isMultiplayer)
-	{
-		if (playerTimer <= 0)
+		if (flyingEnemiesCounter < maxFlyingEnemies)
 		{
-			player2.isHit = false;
+			flyingEnemiesTimer -= GetFrameTime();
+			if (flyingEnemiesTimer < 0)
+			{
+				flyingEnemies[flyingEnemiesCounter].isActive = true;
+				flyingEnemiesTimer = 5.0f;
+				flyingEnemiesCounter++;
+			}
 		}
-		else
+
+		checkInput(backToMenu);
+		moveParallax();
+		movePlayer(player, false);
+		if (isMultiplayer)
 		{
-			playerTimer -= GetFrameTime();
+			movePlayer(player2, true);
 		}
+
+		for (int i = 0; i < playerMaxAmmo; i++)
+		{
+			if (player.playerAmmo[i].isActive)
+			{
+				moveBullet(player.playerAmmo[i]);
+			}
+
+			if (isMultiplayer)
+			{
+				if (player2.playerAmmo[i].isActive)
+				{
+					moveBullet(player2.playerAmmo[i]);
+				}
+			}
+		}
+		for (int i = 0; i < maxLandEnemies; i++)
+		{
+			if (landEnemies[i].isActive)
+			{
+				moveEnemy(landEnemies[i]);
+			}
+		}
+		for (int i = 0; i < maxFlyingEnemies; i++)
+		{
+			if (flyingEnemies[i].isActive)
+			{
+				moveEnemy(flyingEnemies[i]);
+			}
+		}
+		if (player.isHit)
+		{
+			if (playerTimer <= 0)
+			{
+				player.isHit = false;
+			}
+			else
+			{
+				playerTimer -= GetFrameTime();
+			}
+		}
+
+		if (player2.isHit && isMultiplayer)
+		{
+			if (playerTimer <= 0)
+			{
+				player2.isHit = false;
+			}
+			else
+			{
+				playerTimer -= GetFrameTime();
+			}
+		}
+		checkOutOfBounds();
+		checkColitions();
 	}
-	checkOutOfBounds();
-	checkColitions();
 }
 
 void checkInput(bool& backToMenu)

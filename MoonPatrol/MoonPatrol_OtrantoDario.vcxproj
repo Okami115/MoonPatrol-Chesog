@@ -100,6 +100,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\raylib-4.0.0_win32_msvc16\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>call "$(SolutionDir)batch.bat" "$(SolutionDir)\res" "$(TargetDir)\res"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -130,12 +133,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\raylib-4.0.0_win32_msvc16\lib</AdditionalLibraryDirectories>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(SolutionDir)lib" "$(SolutionDir)bin\$(Platform)\$(Configuration)" /e /h /y /s
-
-MKDIR "$(SolutionDir)bin\$(Platform)\$(configuration)\res"
-XCOPY "$(SolutionDir)res" "$(SolutionDir)bin\$(Platform)\$(Configuration)\res" /e /h /y /s</Command>
+      <Command>call "$(SolutionDir)batch.bat" "$(SolutionDir)\res" "$(TargetDir)\res"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
