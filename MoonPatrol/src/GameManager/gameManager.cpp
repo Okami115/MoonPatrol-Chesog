@@ -17,7 +17,7 @@ void executeGame()
 	extern bool isMultiplayer;
 
 	InitWindow(screenWidth, screenHeight, "Moon Patrol Chesog - OkamiDesu - V0.4");
-
+	initTextures();
 	HideCursor();
 	SetExitKey(KEY_NULL);
 
@@ -42,13 +42,13 @@ void executeGame()
 			menuAnsw = gameplayLoop(initGame, backToMenu);
 			break;
 		case (int)MenuStates::Rules:
-			menuAnsw = (int)MenuStates::MainMenu;
+			menuAnsw = Rules(point);
 			break;
 		case (int)MenuStates::Credits:
-			menuAnsw = (int)MenuStates::MainMenu;
+			menuAnsw = Credits(point);
 			break;
 		case (int)MenuStates::Options:
-			menuAnsw = (int)MenuStates::MainMenu;
+			menuAnsw = Options(point);
 			break;
 		case (int)MenuStates::Exit:
 			return;

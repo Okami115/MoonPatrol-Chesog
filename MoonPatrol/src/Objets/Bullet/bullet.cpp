@@ -13,9 +13,7 @@ void initBullet(Bullet& currentBullet)
 
 void drawBullet(Bullet bullet)
 {
-#if _DEBUG
 	DrawCircle(static_cast<int>(bullet.position.x), static_cast<int>(bullet.position.y), bullet.rad, bullet.color);
-#endif // _DEBUG
 }
 void moveBullet(Bullet& bullet)
 {

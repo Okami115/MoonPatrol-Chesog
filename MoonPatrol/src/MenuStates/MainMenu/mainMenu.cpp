@@ -10,6 +10,11 @@ static Button button6;
 
 extern int highScore;
 
+Texture MenuBackground;
+Texture CreditsBackground;
+Texture RulesBackground;
+Texture OptionsBackground;
+
 int mainMenu(int& point)
 {
 	ShowCursor();
@@ -89,8 +94,6 @@ int checkInput(int& point)
 
 void drawMenu(int screenWidth, int screenHeight,int& point)
 {
-	int fontSize = 80;
-	int textSizeTitle = MeasureText(TextFormat("Moon Lander"), fontSize);
 	int textSizeButton1 = MeasureText(TextFormat("SinglePlayer"), button1.fontSize);
 	int textSizeButton2 = MeasureText(TextFormat("MultiPlayer"), button2.fontSize);
 	int textSizeButton3 = MeasureText(TextFormat("REGLAS"), button3.fontSize);
@@ -100,7 +103,7 @@ void drawMenu(int screenWidth, int screenHeight,int& point)
 
 	ClearBackground(BLACK);
 
-	DrawText("Moon Lander", (screenWidth / 2) - (textSizeTitle / 2), fontSize, fontSize, RED);
+	DrawTexture(MenuBackground, 0, 0, WHITE);
 	DrawText("V0.4", 5, 5, 10, RED);
 
 	if (point == (int)MenuStates::Game)
@@ -252,4 +255,63 @@ int checkMouseColition(Vector2 mousePosition, int& point)
 	{
 		return 0;
 	}
+}
+
+int Credits(int& point)
+{
+	if (IsKeyReleased(KEY_ESCAPE))
+	{
+		point = (int)MenuStates::MainMenu;
+	}
+	ClearBackground(BLACK);
+	BeginDrawing();
+	drawCredits();
+	EndDrawing();
+	return point;
+}
+void drawCredits()
+{
+	DrawTexture(CreditsBackground, 0, 0, WHITE);
+}
+
+int Rules(int& point)
+{
+	if (IsKeyReleased(KEY_ESCAPE))
+	{
+		point = (int)MenuStates::MainMenu;
+	}
+	ClearBackground(BLACK);
+	BeginDrawing();
+	drawRules();
+	EndDrawing();
+	return point;
+}
+void drawRules()
+{
+	DrawTexture(RulesBackground, 0, 0, WHITE);
+}
+
+int Options(int& point)
+{
+	if (IsKeyReleased(KEY_ESCAPE))
+	{
+		point = (int)MenuStates::MainMenu;
+	}
+	ClearBackground(BLACK);
+	BeginDrawing();
+	drawOptions();
+	EndDrawing();
+	return point;
+}
+void drawOptions()
+{
+	DrawTexture(OptionsBackground, 0, 0, WHITE);
+}
+
+void initTextures()
+{
+	MenuBackground = LoadTexture("res/Menu.png");
+	CreditsBackground = LoadTexture("res/Credits.png");
+	RulesBackground = LoadTexture("res/Rules.png");
+	OptionsBackground = LoadTexture("res/Options.png");
 }
