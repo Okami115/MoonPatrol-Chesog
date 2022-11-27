@@ -15,6 +15,9 @@ Texture CreditsBackground;
 Texture RulesBackground;
 Texture OptionsBackground;
 
+Music MenuMusic;
+Music GameMusic;
+
 int mainMenu(int& point)
 {
 	ShowCursor();
@@ -50,48 +53,6 @@ int mainMenu(int& point)
 		return selection2;
 	}
 }
-
-int checkInput(int& point)
-{
-	int defaultOption = 0;
-	if (IsKeyReleased(KeyboardKey(KEY_UP)))
-	{
-		if (point <= (int)MenuStates::Game)
-		{
-			point = (int)MenuStates::Exit;
-		}
-		else
-		{
-			point--;
-		}
-		return defaultOption;
-	}
-	else if (IsKeyReleased(KeyboardKey(KEY_DOWN)))
-	{
-		if (point >= (int)MenuStates::Exit)
-		{
-			point = (int)MenuStates::Game;
-		}
-		else
-		{
-			point++;
-		}
-		return defaultOption;
-	}
-	else if (IsKeyReleased(KeyboardKey(KEY_ENTER)))
-	{
-		return point;
-	}
-	else if (IsKeyReleased(KEY_ESCAPE))
-	{
-		return (int)MenuStates::Exit;
-	}
-	else
-	{
-		return defaultOption;
-	}
-}
-
 void drawMenu(int screenWidth, int screenHeight,int& point)
 {
 	int textSizeButton1 = MeasureText(TextFormat("SinglePlayer"), button1.fontSize);
@@ -175,6 +136,47 @@ void drawMenu(int screenWidth, int screenHeight,int& point)
 	DrawRectangle(0, static_cast<int>(button5.rect.y + button5.rect.height / 2), screenWidth, 1, BLUE);
 	DrawRectangle(screenWidth / 2, 0, 1, screenHeight, DARKGREEN);
 #endif // DEBUG
+}
+
+int checkInput(int& point)
+{
+	int defaultOption = 0;
+	if (IsKeyReleased(KeyboardKey(KEY_UP)))
+	{
+		if (point <= (int)MenuStates::Game)
+		{
+			point = (int)MenuStates::Exit;
+		}
+		else
+		{
+			point--;
+		}
+		return defaultOption;
+	}
+	else if (IsKeyReleased(KeyboardKey(KEY_DOWN)))
+	{
+		if (point >= (int)MenuStates::Exit)
+		{
+			point = (int)MenuStates::Game;
+		}
+		else
+		{
+			point++;
+		}
+		return defaultOption;
+	}
+	else if (IsKeyReleased(KeyboardKey(KEY_ENTER)))
+	{
+		return point;
+	}
+	else if (IsKeyReleased(KEY_ESCAPE))
+	{
+		return (int)MenuStates::Exit;
+	}
+	else
+	{
+		return defaultOption;
+	}
 }
 
 int checkMouseColition(Vector2 mousePosition, int& point)
@@ -308,10 +310,44 @@ void drawOptions()
 	DrawTexture(OptionsBackground, 0, 0, WHITE);
 }
 
-void initTextures()
+void playMusic(int point)
+{
+	if (point == static_cast<int>(MenuStates::Game))
+	{
+		StopMusicStream(MenuMusic);
+		PlayMusicStream(GameMusic);
+	}
+	else
+	{
+		StopMusicStream(GameMusic);
+		PlayMusicStream(MenuMusic);
+	}
+
+	UpdateMusicStream(GameMusic);
+	UpdateMusicStream(MenuMusic);
+	SetMusicVolume(GameMusic, 0.3f);
+	SetMusicVolume(MenuMusic, 0.3f);
+}
+
+
+void initTexturesAndMusic()
 {
 	MenuBackground = LoadTexture("res/Menu.png");
 	CreditsBackground = LoadTexture("res/Credits.png");
 	RulesBackground = LoadTexture("res/Rules.png");
 	OptionsBackground = LoadTexture("res/Options.png");
+
+	MenuMusic = LoadMusicStream("res/Menu Music.wav");
+	GameMusic = LoadMusicStream("res/Game Music.wav");
+}
+
+void UninitTexturesAndMusic()
+{
+	UnloadTexture(MenuBackground);
+	UnloadTexture(CreditsBackground);
+	UnloadTexture(RulesBackground);
+	UnloadTexture(OptionsBackground);
+
+	UnloadMusicStream(MenuMusic);
+	UnloadMusicStream(GameMusic);
 }

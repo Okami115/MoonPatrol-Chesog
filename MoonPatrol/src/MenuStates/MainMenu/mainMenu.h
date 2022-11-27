@@ -19,4 +19,6 @@ void drawOptions();
 int checkInput(int& point);
 int checkMouseColition(Vector2 mousePosition, int& point);
 
-void initTextures();
+void playMusic(int point);
+void initTexturesAndMusic();
+void UninitTexturesAndMusic();
