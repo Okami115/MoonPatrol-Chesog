@@ -23,18 +23,23 @@ static float landEnemiesTimer = 3.0f;
 static float flyingEnemiesTimer = 5.0f;
 static float playerTimer = 2.0f;
 
-static Rectangle BackgronudPause;
+static Rectangle BackgroundPause;
 static Button Continue;
+static Button Restart;
 static Button Back;
 int textSizePause;
 int textSizeContinue;
+int textSizeRestart;
 int textSizeBack;
+int textSizeScore; 
+int textSizeGameOver; 
 static int ButtonSelection = 0;
 
 static int landEnemiesCounter = 0;
 static int flyingEnemiesCounter = 0;
 
 bool isPause;
+bool isRestarting;
 
 float gravity = 500.0f;
 float gravity2 = 500.0f;
@@ -69,12 +74,16 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 		initGame = false;
 		backToMenu = false;
 		
-		BackgronudPause = { static_cast<float>(GetScreenWidth() / 4), static_cast<float>(GetScreenHeight() / 4), static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() / 2)};
+		BackgroundPause = { static_cast<float>(GetScreenWidth() / 4), static_cast<float>(GetScreenHeight() / 4), static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() / 2)};
 		textSizePause = MeasureText(TextFormat("PAUSE"), 60);
+		textSizeGameOver = MeasureText(TextFormat("GAME OVER"), 60);
+		textSizeScore = MeasureText(TextFormat("Score: 000000"), 40);
 		Continue = initButton((GetScreenWidth() / 3) - 60, (GetScreenHeight() / 3) * 2, 20, 120, 60, 1, "Continue", DARKGREEN, GREEN);
 		textSizeContinue = MeasureText(TextFormat("Continue"), Continue.fontSize);
 		Back = initButton(((GetScreenWidth() / 3) * 2) - 50, (GetScreenHeight() / 3) * 2, 20, 120, 60, 2, "Back", DARKGREEN, GREEN);
 		textSizeBack = MeasureText(TextFormat("Back"), Back.fontSize);
+		Restart = initButton((GetScreenWidth() / 3) - 60, (GetScreenHeight() / 3) * 2, 20, 120, 60, 3, "Restart", DARKGREEN, GREEN);
+		textSizeRestart = MeasureText(TextFormat("Restar"), Restart.fontSize);
 
 		landEnemiesTimer = 3.0f;
 		flyingEnemiesTimer = 10.0f;
@@ -87,17 +96,23 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 	drawGameplay();
 	if (player.lives <= 0 || player2.lives <= 0 && isMultiplayer)
 	{
-		backToMenu = true;
+		isPause = true;
 	}
 
-	if (backToMenu)
+	if (backToMenu && !isRestarting)
 	{
 		unloadtextures();
 		return static_cast<int>(MenuStates::MainMenu);
 	}
+	else if (isRestarting)
+	{
+		isRestarting = false;
+		initGame = true;
+		return static_cast<int>(MenuStates::Game);
+	}
 	else
 	{
-		return static_cast<int>(MenuStates::SinglePlayer);
+		return static_cast<int>(MenuStates::Game);
 	}
 }
 
@@ -108,7 +123,7 @@ void updateGameplay(bool& backToMenu)
 	if (isPause)
 	{
 
-		if (CheckCollisionPointRec(GetMousePosition(), Continue.rect))
+		if (CheckCollisionPointRec(GetMousePosition(), Continue.rect) && player.lives > 0 && player2.lives > 0 || CheckCollisionPointRec(GetMousePosition(), Continue.rect) && player.lives > 0 && !isMultiplayer)
 		{
 			if (IsMouseButtonReleased(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))
 			{
@@ -123,6 +138,14 @@ void updateGameplay(bool& backToMenu)
 				backToMenu = true;
 			}
 			ButtonSelection = Back.optionNumber;
+		}
+		else if (CheckCollisionPointRec(GetMousePosition(), Restart.rect) && player.lives <= 0 || CheckCollisionPointRec(GetMousePosition(), Restart.rect) && player2.lives <= 0)
+		{
+			if (IsMouseButtonReleased(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))
+			{
+				isRestarting = true;
+			}
+			ButtonSelection = Restart.optionNumber;
 		}
 		else
 		{
@@ -250,10 +273,10 @@ void drawGameplay()
 	}
 	drawPlayerBullets();
 
-	if (isPause)
+	if (isPause && player.lives > 0 && player2.lives > 0 || isPause && player.lives > 0 && !isMultiplayer)
 	{
-		DrawRectangle(static_cast<int>(BackgronudPause.x), static_cast<int>(BackgronudPause.y), static_cast<int>(BackgronudPause.width), static_cast<int>(BackgronudPause.height), BLACK);
-		DrawText("PAUSE", static_cast<int>((BackgronudPause.x + BackgronudPause.width / 2) - (textSizePause / 2)), static_cast<int>(BackgronudPause.y + 60), 60, WHITE);
+		DrawRectangle(static_cast<int>(BackgroundPause.x), static_cast<int>(BackgroundPause.y), static_cast<int>(BackgroundPause.width), static_cast<int>(BackgroundPause.height), BLACK);
+		DrawText("PAUSE", static_cast<int>((BackgroundPause.x + BackgroundPause.width / 2) - (textSizePause / 2)), static_cast<int>(BackgroundPause.y + 60), 60, WHITE);
 		
 		if (ButtonSelection == Continue.optionNumber)
 		{
@@ -277,10 +300,35 @@ void drawGameplay()
 
 	}
 
-	DrawText(TextFormat("Lives %i", player.lives), 1, GetScreenHeight() - 30, 20, YELLOW);
+	if (isPause && player.lives <= 0 || isPause && player2.lives <= 0 && isMultiplayer)
+	{
+		DrawRectangle(static_cast<int>(BackgroundPause.x), static_cast<int>(BackgroundPause.y), static_cast<int>(BackgroundPause.width), static_cast<int>(BackgroundPause.height), BLACK);
+		DrawText("GAME OVER", static_cast<int>((BackgroundPause.x + BackgroundPause.width / 2) - (textSizeGameOver / 2)), static_cast<int>(BackgroundPause.y + 60), 60, WHITE);
+		DrawText(TextFormat("Score %06i", player.score * 100), static_cast<int>((BackgroundPause.x + BackgroundPause.width / 2) - (textSizeScore / 2)), static_cast<int>(BackgroundPause.y + BackgroundPause.height / 2), 40, RED);
 
-	int scoreSize = MeasureText(TextFormat("Score %i", player.score),20);
-	DrawText(TextFormat("Score %i", player.score * 100),(GetScreenWidth() / 2) - (scoreSize / 2),0, 20, YELLOW);
+		if (ButtonSelection == Restart.optionNumber)
+		{
+			DrawRectangle(static_cast<int>(Restart.rect.x), static_cast<int>(Restart.rect.y), static_cast<int>(Restart.rect.width), static_cast<int>(Restart.rect.height), Restart.selectionColor);
+		}
+		else
+		{
+			DrawRectangle(static_cast<int>(Restart.rect.x), static_cast<int>(Restart.rect.y), static_cast<int>(Restart.rect.width), static_cast<int>(Restart.rect.height), Restart.buttonColor);
+		}
+		DrawText("Restart", static_cast<int>((Restart.rect.x + Restart.rect.width / 2) - (textSizeRestart / 2)), static_cast<int>(Restart.rect.y + Restart.rect.height / 2 - Restart.fontSize / 2), Restart.fontSize, WHITE);
+
+		if (ButtonSelection == Back.optionNumber)
+		{
+			DrawRectangle(static_cast<int>(Back.rect.x), static_cast<int>(Back.rect.y), static_cast<int>(Back.rect.width), static_cast<int>(Back.rect.height), Back.selectionColor);
+		}
+		else
+		{
+			DrawRectangle(static_cast<int>(Back.rect.x), static_cast<int>(Back.rect.y), static_cast<int>(Back.rect.width), static_cast<int>(Back.rect.height), Back.buttonColor);
+		}
+		DrawText("Back", static_cast<int>((Back.rect.x + Back.rect.width / 2) - (textSizeBack / 2)), static_cast<int>(Back.rect.y + Back.rect.height / 2 - Back.fontSize / 2), Back.fontSize, WHITE);
+
+	}
+
+	DrawText(TextFormat("Score %06i", player.score * 100),(GetScreenWidth() / 2) - (textSizeScore / 4),0, 20, YELLOW);
 
 	EndDrawing();
 }

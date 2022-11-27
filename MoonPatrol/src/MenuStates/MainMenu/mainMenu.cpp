@@ -21,7 +21,7 @@ int mainMenu(int& point)
 	int screenWidth = GetScreenWidth();
 	int screenHeight = GetScreenHeight();
 
-	button1 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) - buttonHeight * 2, fontSize, buttonWidth, buttonHeight, (int)MenuStates::SinglePlayer, "SinglePlayer", GREEN, RED);
+	button1 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) - buttonHeight * 2, fontSize, buttonWidth, buttonHeight, (int)MenuStates::Game, "SinglePlayer", GREEN, RED);
 	button2 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 0, fontSize, buttonWidth, buttonHeight, (int)MenuStates::MultiPlayer, "MultiPlayer", GREEN, RED);
 	button3 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 2, fontSize, buttonWidth, buttonHeight, (int)MenuStates::Rules, "Reglas", GREEN, RED);
 	button4 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 4, fontSize, buttonWidth, buttonHeight, (int)MenuStates::Options, "Opciones", GREEN, RED);
@@ -51,7 +51,7 @@ int checkInput(int& point)
 	int defaultOption = 0;
 	if (IsKeyReleased(KeyboardKey(KEY_UP)))
 	{
-		if (point <= (int)MenuStates::SinglePlayer)
+		if (point <= (int)MenuStates::Game)
 		{
 			point = (int)MenuStates::Exit;
 		}
@@ -65,7 +65,7 @@ int checkInput(int& point)
 	{
 		if (point >= (int)MenuStates::Exit)
 		{
-			point = (int)MenuStates::SinglePlayer;
+			point = (int)MenuStates::Game;
 		}
 		else
 		{
@@ -103,11 +103,11 @@ void drawMenu(int screenWidth, int screenHeight,int& point)
 	DrawText("Moon Lander", (screenWidth / 2) - (textSizeTitle / 2), fontSize, fontSize, RED);
 	DrawText("V0.4", 5, 5, 10, RED);
 
-	if (point == (int)MenuStates::SinglePlayer)
+	if (point == (int)MenuStates::Game)
 	{
 		DrawRectangle(static_cast<int>(button1.rect.x), static_cast<int>(button1.rect.y), static_cast<int>(button1.rect.width), static_cast<int>(button1.rect.height),button1.buttonColor);
 	}
-	else if (point != (int)MenuStates::SinglePlayer)
+	else if (point != (int)MenuStates::Game)
 	{
 		DrawRectangle(static_cast<int>(button1.rect.x), static_cast<int>(button1.rect.y), static_cast<int>(button1.rect.width), static_cast<int>(button1.rect.height), button1.selectionColor);
 	}

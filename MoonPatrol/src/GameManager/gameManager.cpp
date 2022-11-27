@@ -38,7 +38,7 @@ void executeGame()
 			break;
 		case (int)MenuStates::MultiPlayer:
 			isMultiplayer = true;
-		case (int)MenuStates::SinglePlayer:
+		case (int)MenuStates::Game:
 			menuAnsw = gameplayLoop(initGame, backToMenu);
 			break;
 		case (int)MenuStates::Rules:
