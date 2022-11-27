@@ -49,7 +49,7 @@ int mainMenu(int& point)
 int checkInput(int& point)
 {
 	int defaultOption = 0;
-	if (IsKeyDown(KeyboardKey(KEY_UP)))
+	if (IsKeyReleased(KeyboardKey(KEY_UP)))
 	{
 		if (point <= (int)MenuStates::SinglePlayer)
 		{
@@ -61,7 +61,7 @@ int checkInput(int& point)
 		}
 		return defaultOption;
 	}
-	else if (IsKeyDown(KeyboardKey(KEY_DOWN)))
+	else if (IsKeyReleased(KeyboardKey(KEY_DOWN)))
 	{
 		if (point >= (int)MenuStates::Exit)
 		{
@@ -73,11 +73,11 @@ int checkInput(int& point)
 		}
 		return defaultOption;
 	}
-	else if (IsKeyDown(KeyboardKey(KEY_ENTER)))
+	else if (IsKeyReleased(KeyboardKey(KEY_ENTER)))
 	{
 		return point;
 	}
-	else if (IsKeyDown(KEY_ESCAPE))
+	else if (IsKeyReleased(KEY_ESCAPE))
 	{
 		return (int)MenuStates::Exit;
 	}

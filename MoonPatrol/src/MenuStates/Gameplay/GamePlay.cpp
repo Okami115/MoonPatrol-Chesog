@@ -1,6 +1,7 @@
 #include <iostream>
 #include "include/raylib.h"
 #include "GameManager/gameManager.h"
+#include "Objets/Button/button.h"
 #include "GamePlay.h"
 
 static Player player;
@@ -22,6 +23,14 @@ static float landEnemiesTimer = 3.0f;
 static float flyingEnemiesTimer = 5.0f;
 static float playerTimer = 2.0f;
 
+static Rectangle BackgronudPause;
+static Button Continue;
+static Button Back;
+int textSizePause;
+int textSizeContinue;
+int textSizeBack;
+static int ButtonSelection = 0;
+
 static int landEnemiesCounter = 0;
 static int flyingEnemiesCounter = 0;
 
@@ -30,23 +39,11 @@ bool isPause;
 float gravity = 500.0f;
 float gravity2 = 500.0f;
 
-void drawPlayerBullets();
-
-void checkInput(bool& backToMenu);
-
-void playerOutOfBounds();
-
-void enemyOutOfBounds();
-
-void playerEnemyColition(Enemy& CurrentEnemy);
-
-void bulletEnemyColition(Enemy& CurrentEnemy, Bullet& currentBullet);
-
 int gameplayLoop(bool& initGame, bool& backToMenu)
 {
-	HideCursor();
 	if (initGame)
 	{
+		isPause = false;
 		player = initplayer(false);
 		if (isMultiplayer)
 		{
@@ -71,6 +68,13 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 		loadTextures();
 		initGame = false;
 		backToMenu = false;
+		
+		BackgronudPause = { static_cast<float>(GetScreenWidth() / 4), static_cast<float>(GetScreenHeight() / 4), static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() / 2)};
+		textSizePause = MeasureText(TextFormat("PAUSE"), 60);
+		Continue = initButton((GetScreenWidth() / 3) - 60, (GetScreenHeight() / 3) * 2, 20, 120, 60, 1, "Continue", DARKGREEN, GREEN);
+		textSizeContinue = MeasureText(TextFormat("Continue"), Continue.fontSize);
+		Back = initButton(((GetScreenWidth() / 3) * 2) - 50, (GetScreenHeight() / 3) * 2, 20, 120, 60, 2, "Back", DARKGREEN, GREEN);
+		textSizeBack = MeasureText(TextFormat("Back"), Back.fontSize);
 
 		landEnemiesTimer = 3.0f;
 		flyingEnemiesTimer = 10.0f;
@@ -99,9 +103,31 @@ int gameplayLoop(bool& initGame, bool& backToMenu)
 
 void updateGameplay(bool& backToMenu)
 {
+	checkInput();
+
 	if (isPause)
 	{
 
+		if (CheckCollisionPointRec(GetMousePosition(), Continue.rect))
+		{
+			if (IsMouseButtonReleased(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))
+			{
+				isPause = false;
+			}
+			ButtonSelection = Continue.optionNumber;
+		}
+		else if (CheckCollisionPointRec(GetMousePosition(), Back.rect))
+		{
+			if (IsMouseButtonReleased(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))
+			{
+				backToMenu = true;
+			}
+			ButtonSelection = Back.optionNumber;
+		}
+		else
+		{
+			ButtonSelection = 0;
+		}
 	}
 	else
 	{
@@ -127,7 +153,6 @@ void updateGameplay(bool& backToMenu)
 			}
 		}
 
-		checkInput(backToMenu);
 		moveParallax();
 		movePlayer(player, false);
 		if (isMultiplayer)
@@ -164,6 +189,7 @@ void updateGameplay(bool& backToMenu)
 				moveEnemy(flyingEnemies[i]);
 			}
 		}
+
 		if (player.isHit)
 		{
 			if (playerTimer <= 0)
@@ -192,11 +218,85 @@ void updateGameplay(bool& backToMenu)
 	}
 }
 
-void checkInput(bool& backToMenu)
+void drawGameplay()
+{
+	ClearBackground(BLACK);
+	BeginDrawing();
+
+	drawParallax();
+
+	DrawText(TextFormat("V 0.4"), 5, 5, 10, RED);
+
+	drawPlayer(player);
+
+	if (isMultiplayer)
+	{
+		drawPlayer(player2);
+	}
+
+	for (int i = 0; i < maxLandEnemies + 1; i++)
+	{
+		if (landEnemies[i].isActive)
+		{
+			drawEnemy(landEnemies[i]);
+		}
+	}
+	for (int i = 0; i < maxFlyingEnemies + 1; i++)
+	{
+		if (flyingEnemies[i].isActive)
+		{
+			drawEnemy(flyingEnemies[i]);
+		}
+	}
+	drawPlayerBullets();
+
+	if (isPause)
+	{
+		DrawRectangle(static_cast<int>(BackgronudPause.x), static_cast<int>(BackgronudPause.y), static_cast<int>(BackgronudPause.width), static_cast<int>(BackgronudPause.height), BLACK);
+		DrawText("PAUSE", static_cast<int>((BackgronudPause.x + BackgronudPause.width / 2) - (textSizePause / 2)), static_cast<int>(BackgronudPause.y + 60), 60, WHITE);
+		
+		if (ButtonSelection == Continue.optionNumber)
+		{
+			DrawRectangle(static_cast<int>(Continue.rect.x), static_cast<int>(Continue.rect.y), static_cast<int>(Continue.rect.width), static_cast<int>(Continue.rect.height), Continue.selectionColor);
+		}
+		else
+		{
+			DrawRectangle(static_cast<int>(Continue.rect.x), static_cast<int>(Continue.rect.y), static_cast<int>(Continue.rect.width), static_cast<int>(Continue.rect.height), Continue.buttonColor);
+		}
+		DrawText("Continue", static_cast<int>((Continue.rect.x + Continue.rect.width / 2) - (textSizeContinue / 2)), static_cast<int>(Continue.rect.y + Continue.rect.height / 2 - Continue.fontSize / 2), Continue.fontSize, WHITE);
+
+		if (ButtonSelection == Back.optionNumber)
+		{
+			DrawRectangle(static_cast<int>(Back.rect.x), static_cast<int>(Back.rect.y), static_cast<int>(Back.rect.width), static_cast<int>(Back.rect.height), Back.selectionColor);
+		}
+		else
+		{
+			DrawRectangle(static_cast<int>(Back.rect.x), static_cast<int>(Back.rect.y), static_cast<int>(Back.rect.width), static_cast<int>(Back.rect.height), Back.buttonColor);
+		}
+		DrawText("Back", static_cast<int>((Back.rect.x + Back.rect.width / 2) - (textSizeBack / 2)), static_cast<int>(Back.rect.y + Back.rect.height / 2 - Back.fontSize / 2), Back.fontSize, WHITE);
+
+	}
+
+	DrawText(TextFormat("Lives %i", player.lives), 1, GetScreenHeight() - 30, 20, YELLOW);
+
+	int scoreSize = MeasureText(TextFormat("Score %i", player.score),20);
+	DrawText(TextFormat("Score %i", player.score * 100),(GetScreenWidth() / 2) - (scoreSize / 2),0, 20, YELLOW);
+
+	EndDrawing();
+}
+
+void checkInput()
 {
 	if (IsKeyReleased(KEY_ESCAPE))
 	{
-		backToMenu = true;
+		if (isPause)
+		{
+			isPause = false;
+		}
+		else
+		{
+			isPause = true;
+		}
 	}
 	if (IsKeyDown(KEY_W))
 	{
@@ -290,45 +390,6 @@ void moveParallax()
 	if (scrollingMid <= -far_buildings.width * 3) scrollingMid = 0;
 	if (scrollingMid <= -buildings.width * 3) scrollingMid = 0;
 	if (scrollingFore <= -foreground.width * 3) scrollingFore = 0;
-}
-
-void drawGameplay()
-{
-	ClearBackground(BLACK);
-	BeginDrawing();
-
-	drawParallax();
-
-	DrawText(TextFormat("V 0.4"), 5, 5, 10, RED);
-
-	drawPlayer(player);
-
-	if (isMultiplayer)
-	{
-		drawPlayer(player2);
-	}
-	for (int i = 0; i < maxLandEnemies + 1; i++)
-	{
-		if (landEnemies[i].isActive)
-		{
-			drawEnemy(landEnemies[i]);
-		}
-	}
-	for (int i = 0; i < maxFlyingEnemies + 1; i++)
-	{
-		if (flyingEnemies[i].isActive)
-		{
-			drawEnemy(flyingEnemies[i]);
-		}
-	}
-	drawPlayerBullets();
-
-	DrawText(TextFormat("Lives %i", player.lives), 1, GetScreenHeight() - 30, 20, YELLOW);
-
-	int scoreSize = MeasureText(TextFormat("Score %i", player.score),20);
-	DrawText(TextFormat("Score %i", player.score * 100),(GetScreenWidth() / 2) - (scoreSize / 2),0, 20, YELLOW);
-
-	EndDrawing();
 }
 
 void drawParallax()
