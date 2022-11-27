@@ -248,7 +248,7 @@ void drawGameplay()
 
 	drawParallax();
 
-	DrawText(TextFormat("V 0.4"), 5, 5, 10, RED);
+	DrawText(TextFormat("V 1.0"), 5, 5, 10, RED);
 
 	drawPlayer(player);
 

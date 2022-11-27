@@ -101,7 +101,7 @@
       <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>call "$(SolutionDir)batch.bat" "$(SolutionDir)\res" "$(TargetDir)\res"</Command>
+      <Command>call "$(SolutionDir)batch.bat" "$(SolutionDir)res" "$(TargetDir)\res"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -136,7 +136,7 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>call "$(SolutionDir)batch.bat" "$(SolutionDir)\res" "$(TargetDir)\res"</Command>
+      <Command>call "$(SolutionDir)batch.bat" "$(SolutionDir)res" "$(TargetDir)\res"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

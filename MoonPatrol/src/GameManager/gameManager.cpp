@@ -16,7 +16,7 @@ void executeGame()
 
 	extern bool isMultiplayer;
 
-	InitWindow(screenWidth, screenHeight, "Moon Patrol Chesog - OkamiDesu - V0.4");
+	InitWindow(screenWidth, screenHeight, "Moon Patrol Chesog - OkamiDesu - V1.0");
 	InitAudioDevice();
 	initTexturesAndMusic();
 	HideCursor();

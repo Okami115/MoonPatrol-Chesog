@@ -65,7 +65,7 @@ void drawMenu(int screenWidth, int screenHeight,int& point)
 	ClearBackground(BLACK);
 
 	DrawTexture(MenuBackground, 0, 0, WHITE);
-	DrawText("V0.4", 5, 5, 10, RED);
+	DrawText("V1.0", 5, 5, 10, RED);
 
 	if (point == (int)MenuStates::Game)
 	{
