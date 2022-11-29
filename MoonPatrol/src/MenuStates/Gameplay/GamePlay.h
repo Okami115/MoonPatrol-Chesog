@@ -4,36 +4,40 @@
 #include "Objets/Obstacle/obstacle.h"
 #include "Objets/Enemy/enemy.h"
 
-int gameplayLoop(bool& initGame, bool& backToMenu);
+namespace MoonPatrol
+{
+	int gameplayLoop(bool& initGame, bool& backToMenu);
 
-void updateGameplay(bool& backToMenu);
+	void updateGameplay(bool& backToMenu);
 
-void moveParallax(); 
+	void moveParallax(); 
 
-void drawGameplay();
+	void drawGameplay();
 
-void drawParallax();
+	void drawParallax();
 
-void checkOutOfBounds();
+	void checkOutOfBounds();
 
-void obstacleOutOfBounds(Obstacle& currentObstacle);
+	void obstacleOutOfBounds(Obstacle& currentObstacle);
 
-void checkColitions();
+	void checkColitions();
 
-void playerObstacleColition(Obstacle& currentObstacle, bool& backToMenu);
+	void playerObstacleColition(Obstacle& currentObstacle, bool& backToMenu);
 
-void loadTextures();
+	void loadTextures();
 
-void unloadtextures();
+	void unloadtextures();
 
-void drawPlayerBullets();
+	void drawPlayerBullets();
 
-void checkInput();
+	void checkInput();
 
-void playerOutOfBounds();
+	void playerOutOfBounds();
 
-void enemyOutOfBounds();
+	void enemyOutOfBounds();
 
-void playerEnemyColition(Enemy& CurrentEnemy);
+	void playerEnemyColition(Enemy& CurrentEnemy);
 
-void bulletEnemyColition(Enemy& CurrentEnemy, Bullet& currentBullet);
+	void bulletEnemyColition(Enemy& CurrentEnemy, Bullet& currentBullet);
+
+}

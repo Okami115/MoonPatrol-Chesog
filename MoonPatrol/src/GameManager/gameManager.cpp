@@ -3,7 +3,9 @@
 #include "MenuStates/Gameplay/GamePlay.h"
 #include "MenuStates/MainMenu/mainMenu.h"
 
-void executeGame() 
+namespace MoonPatrol
+{
+	void executeGame() 
 {
 	int screenWidth = 1024;
 	int screenHeight = 768;
@@ -60,4 +62,5 @@ void executeGame()
 
 	UninitTexturesAndMusic();
 	CloseWindow();
+}
 }

@@ -2,6 +2,6 @@
 
 int main() 
 {
-	executeGame();
+	MoonPatrol::executeGame();
 	return 0;
 }

@@ -3,24 +3,28 @@
 #include "include/raylib.h"
 #include "GameManager/gameManager.h"
 
-struct Enemy
+namespace MoonPatrol
 {
-	EnemyType enemyType;
-	Color enemyColor;
-	Vector2 pos;
-	Vector2 CurrentDirection;
+	struct Enemy
+	{
+		EnemyType enemyType;
+		Color enemyColor;
+		Vector2 pos;
+		Vector2 CurrentDirection;
 
-	float height;
-	float widht;
-	float speed;
+		float height;
+		float widht;
+		float speed;
 
-	int lives;
+		int lives;
 
-	bool isActive;
-	bool isHit;
-};
+		bool isActive;
+		bool isHit;
+	};
 
-Enemy initEnemy(EnemyType enemyType, bool isForPlayer2);
-void resetPosition(Enemy& currentEnemy, int& cuerrentEnemyActives, bool isForPlayer2);
-void drawEnemy(Enemy currentEnemy);
-void moveEnemy(Enemy& currentEnemy);
+	Enemy initEnemy(EnemyType enemyType, bool isForPlayer2);
+	void resetPosition(Enemy& currentEnemy, int& cuerrentEnemyActives, bool isForPlayer2);
+	void drawEnemy(Enemy currentEnemy);
+	void moveEnemy(Enemy& currentEnemy);
+
+}

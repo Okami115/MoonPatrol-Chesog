@@ -3,28 +3,32 @@
 #include "Objets/Bullet/bullet.h"
 #include "GameManager/gameManager.h"
 
-const int playerMaxAmmo = 100;
-
-struct Player
+namespace MoonPatrol
 {
-	Vector2 pos;
-	Color playerColor;
 
-	float height;
-	float widht;
-	float CurrentDirection;
-	float speed;
+	const int playerMaxAmmo = 100;
 
-	int lives;
-	int score;
+	struct Player
+	{
+		Vector2 pos;
+		Color playerColor;
 
-	bool isHit;
-	bool onAir;
+		float height;
+		float widht;
+		float CurrentDirection;
+		float speed;
 
-	Bullet playerAmmo[playerMaxAmmo];
-};
+		int lives;
+		int score;
 
-Player initplayer(bool isPlayer2);
-void shoot(Bullet& bullet, Player player);
-void movePlayer(Player& player, bool isPlayer2);
-void drawPlayer(Player player);
+		bool isHit;
+		bool onAir;
+
+		Bullet playerAmmo[playerMaxAmmo];
+	};
+
+	Player initplayer(bool isPlayer2);
+	void shoot(Bullet& bullet, Player player);
+	void movePlayer(Player& player, bool isPlayer2);
+	void drawPlayer(Player player);
+}

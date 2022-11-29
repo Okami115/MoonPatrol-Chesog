@@ -3,22 +3,25 @@
 #include "Objets/Button/button.h"
 #include "GameManager/gameManager.h"
 
+namespace MoonPatrol
+{
+	int mainMenu(int& point);
+	void drawMenu(int screenWidth, int screenHeight, int& point);
 
-int mainMenu(int& point);
-void drawMenu(int screenWidth, int screenHeight, int& point);
+	int Credits(int& point);
+	void drawCredits();
 
-int Credits(int& point);
-void drawCredits();
+	int Rules(int& point);
+	void drawRules();
 
-int Rules(int& point);
-void drawRules();
+	int Options(int& point);
+	void drawOptions();
 
-int Options(int& point);
-void drawOptions();
+	int checkInput(int& point);
+	int checkMouseColition(Vector2 mousePosition, int& point);
 
-int checkInput(int& point);
-int checkMouseColition(Vector2 mousePosition, int& point);
+	void playMusic(int point);
+	void initTexturesAndMusic();
+	void UninitTexturesAndMusic();
 
-void playMusic(int point);
-void initTexturesAndMusic();
-void UninitTexturesAndMusic();
+}
