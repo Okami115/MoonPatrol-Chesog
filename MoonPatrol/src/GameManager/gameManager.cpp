@@ -8,7 +8,7 @@ void executeGame()
 	int screenWidth = 1024;
 	int screenHeight = 768;
 
-	int menuAnsw = (int)MenuStates::MainMenu;
+	int menuAnsw = static_cast<int>(MenuStates::MainMenu);
 	int point = 0;
 
 	bool backToMenu = false;
@@ -31,28 +31,28 @@ void executeGame()
 		playMusic(menuAnsw);
 		switch (menuAnsw)
 		{
-		case (int)MenuStates::MainMenu:
+		case static_cast<int>(MenuStates::MainMenu):
 			backToMenu = false;
 			reset = true;
 			isMultiplayer = false;
 			initGame = true;
 			menuAnsw = mainMenu(point);
 			break;
-		case (int)MenuStates::MultiPlayer:
+		case static_cast<int>(MenuStates::MultiPlayer):
 			isMultiplayer = true;
-		case (int)MenuStates::Game:
+		case static_cast<int>(MenuStates::Game):
 			menuAnsw = gameplayLoop(initGame, backToMenu);
 			break;
-		case (int)MenuStates::Rules:
+		case static_cast<int>(MenuStates::Rules):
 			menuAnsw = Rules(point);
 			break;
-		case (int)MenuStates::Credits:
+		case static_cast<int>(MenuStates::Credits):
 			menuAnsw = Credits(point);
 			break;
-		case (int)MenuStates::Options:
+		case static_cast<int>(MenuStates::Options):
 			menuAnsw = Options(point);
 			break;
-		case (int)MenuStates::Exit:
+		case static_cast<int>(MenuStates::Exit):
 			return;
 			break;
 		}

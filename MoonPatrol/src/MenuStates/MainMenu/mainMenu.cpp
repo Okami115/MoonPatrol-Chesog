@@ -29,12 +29,12 @@ int mainMenu(int& point)
 	int screenWidth = GetScreenWidth();
 	int screenHeight = GetScreenHeight();
 
-	button1 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) - buttonHeight * 2, fontSize, buttonWidth, buttonHeight, (int)MenuStates::Game, "SinglePlayer", GREEN, RED);
-	button2 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 0, fontSize, buttonWidth, buttonHeight, (int)MenuStates::MultiPlayer, "MultiPlayer", GREEN, RED);
-	button3 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 2, fontSize, buttonWidth, buttonHeight, (int)MenuStates::Rules, "Reglas", GREEN, RED);
-	button4 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 4, fontSize, buttonWidth, buttonHeight, (int)MenuStates::Options, "Opciones", GREEN, RED);
-	button5 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 6, fontSize, buttonWidth, buttonHeight, (int)MenuStates::Credits, "Creditos", GREEN, RED);
-	button6 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 8, fontSize, buttonWidth, buttonHeight, (int)MenuStates::Exit, "Salir", GREEN, RED);
+	button1 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) - buttonHeight * 2, fontSize, buttonWidth, buttonHeight, static_cast<int>(MenuStates::Game), "SinglePlayer", GREEN, RED);
+	button2 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 0, fontSize, buttonWidth, buttonHeight, static_cast<int>(MenuStates::MultiPlayer), "MultiPlayer", GREEN, RED);
+	button3 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 2, fontSize, buttonWidth, buttonHeight, static_cast<int>(MenuStates::Rules), "Reglas", GREEN, RED);
+	button4 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 4, fontSize, buttonWidth, buttonHeight, static_cast<int>(MenuStates::Options), "Opciones", GREEN, RED);
+	button5 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 6, fontSize, buttonWidth, buttonHeight, static_cast<int>(MenuStates::Credits), "Creditos", GREEN, RED);
+	button6 = initButton(((screenWidth / 2) - (buttonWidth / 2)), (screenHeight / 2) + buttonHeight * 8, fontSize, buttonWidth, buttonHeight, static_cast<int>(MenuStates::Exit), "Salir", GREEN, RED);
 	Vector2 mousePosition = GetMousePosition();
 
 	selection = checkInput(point);
@@ -67,61 +67,61 @@ void drawMenu(int screenWidth, int screenHeight,int& point)
 	DrawTexture(MenuBackground, 0, 0, WHITE);
 	DrawText("V1.0", 5, 5, 10, RED);
 
-	if (point == (int)MenuStates::Game)
+	if (point == static_cast<int>(MenuStates::Game))
 	{
 		DrawRectangle(static_cast<int>(button1.rect.x), static_cast<int>(button1.rect.y), static_cast<int>(button1.rect.width), static_cast<int>(button1.rect.height),button1.buttonColor);
 	}
-	else if (point != (int)MenuStates::Game)
+	else if (point != static_cast<int>(MenuStates::Game))
 	{
 		DrawRectangle(static_cast<int>(button1.rect.x), static_cast<int>(button1.rect.y), static_cast<int>(button1.rect.width), static_cast<int>(button1.rect.height), button1.selectionColor);
 	}
 	DrawText("SinglePlayer", ((screenWidth / 2) - (textSizeButton1 / 2)), static_cast<int>(button1.rect.y + button1.rect.height / 6), button1.fontSize, BLACK);
 
-	if (point == (int)MenuStates::MultiPlayer)
+	if (point == static_cast<int>(MenuStates::MultiPlayer))
 	{
 		DrawRectangle(static_cast<int>(button2.rect.x), static_cast<int>(button2.rect.y), static_cast<int>(button2.rect.width), static_cast<int>(button2.rect.height), button2.buttonColor);
 	}
-	else if (point != (int)MenuStates::MultiPlayer)
+	else if (point != static_cast<int>(MenuStates::MultiPlayer))
 	{
 		DrawRectangle(static_cast<int>(button2.rect.x), static_cast<int>(button2.rect.y), static_cast<int>(button2.rect.width), static_cast<int>(button2.rect.height), button2.selectionColor);
 	}
 	DrawText("MultiPlayer", ((screenWidth / 2) - (textSizeButton2 / 2)), static_cast<int>(button2.rect.y + button2.rect.height / 6), button2.fontSize, BLACK);
 
-	if (point == (int)MenuStates::Rules)
+	if (point == static_cast<int>(MenuStates::Rules))
 	{
 		DrawRectangle(static_cast<int>(button3.rect.x), static_cast<int>(button3.rect.y), static_cast<int>(button3.rect.width), static_cast<int>(button3.rect.height), button3.buttonColor);
 	}
-	else if (point != (int)MenuStates::Rules)
+	else if (point != static_cast<int>(MenuStates::Rules))
 	{
 		DrawRectangle(static_cast<int>(button3.rect.x), static_cast<int>(button3.rect.y), static_cast<int>(button3.rect.width), static_cast<int>(button3.rect.height), button3.selectionColor);
 	}
 	DrawText("REGLAS", ((screenWidth / 2) - (textSizeButton3 / 2)), static_cast<int>(button3.rect.y + button3.rect.height / 6), button3.fontSize, BLACK);
 
-	if (point == (int)MenuStates::Options)
+	if (point == static_cast<int>(MenuStates::Options))
 	{
 		DrawRectangle(static_cast<int>(button4.rect.x), static_cast<int>(button4.rect.y), static_cast<int>(button4.rect.width), static_cast<int>(button4.rect.height), button4.buttonColor);
 	}
-	else if (point != (int)MenuStates::Options)
+	else if (point != static_cast<int>(MenuStates::Options))
 	{
 		DrawRectangle(static_cast<int>(button4.rect.x), static_cast<int>(button4.rect.y), static_cast<int>(button4.rect.width), static_cast<int>(button4.rect.height),button4.selectionColor);
 	}
 	DrawText("OPCIONES", ((screenWidth / 2) - (textSizeButton4 / 2)), static_cast<int>(button4.rect.y + button4.rect.height / 6), button4.fontSize, BLACK);
 
-	if (point == (int)MenuStates::Credits)
+	if (point == static_cast<int>(MenuStates::Credits))
 	{
 		DrawRectangle(static_cast<int>(button5.rect.x), static_cast<int>(button5.rect.y), static_cast<int>(button5.rect.width), static_cast<int>(button5.rect.height), button5.buttonColor);
 	}
-	else if (point != (int)MenuStates::Credits)
+	else if (point != static_cast<int>(MenuStates::Credits))
 	{
 		DrawRectangle(static_cast<int>(button5.rect.x), static_cast<int>(button5.rect.y), static_cast<int>(button5.rect.width), static_cast<int>(button5.rect.height), button5.selectionColor);
 	}
 	DrawText("CREDITOS", ((screenWidth / 2) - (textSizeButton5 / 2)), static_cast<int>(button5.rect.y + button5.rect.height / 6), button5.fontSize, BLACK);
 
-	if (point == (int)MenuStates::Exit)
+	if (point == static_cast<int>(MenuStates::Exit))
 	{
 		DrawRectangle(static_cast<int>(button6.rect.x), static_cast<int>(button6.rect.y), static_cast<int>(button6.rect.width), static_cast<int>(button6.rect.height), button6.buttonColor);
 	}
-	else if (point != (int)MenuStates::Exit)
+	else if (point != static_cast<int>(MenuStates::Exit))
 	{
 		DrawRectangle(static_cast<int>(button6.rect.x), static_cast<int>(button6.rect.y), static_cast<int>(button6.rect.width), static_cast<int>(button6.rect.height), button6.selectionColor);
 	}
@@ -143,9 +143,9 @@ int checkInput(int& point)
 	int defaultOption = 0;
 	if (IsKeyReleased(KeyboardKey(KEY_UP)))
 	{
-		if (point <= (int)MenuStates::Game)
+		if (point <= static_cast<int>(MenuStates::Game))
 		{
-			point = (int)MenuStates::Exit;
+			point = static_cast<int>(MenuStates::Exit);
 		}
 		else
 		{
@@ -155,9 +155,9 @@ int checkInput(int& point)
 	}
 	else if (IsKeyReleased(KeyboardKey(KEY_DOWN)))
 	{
-		if (point >= (int)MenuStates::Exit)
+		if (point >= static_cast<int>(MenuStates::Exit))
 		{
-			point = (int)MenuStates::Game;
+			point = static_cast<int>(MenuStates::Game);
 		}
 		else
 		{
@@ -171,7 +171,7 @@ int checkInput(int& point)
 	}
 	else if (IsKeyReleased(KEY_ESCAPE))
 	{
-		return (int)MenuStates::Exit;
+		return static_cast<int>(MenuStates::Exit);
 	}
 	else
 	{
@@ -263,7 +263,7 @@ int Credits(int& point)
 {
 	if (IsKeyReleased(KEY_ESCAPE))
 	{
-		point = (int)MenuStates::MainMenu;
+		point = static_cast<int>(MenuStates::MainMenu);
 	}
 	ClearBackground(BLACK);
 	BeginDrawing();
@@ -280,7 +280,7 @@ int Rules(int& point)
 {
 	if (IsKeyReleased(KEY_ESCAPE))
 	{
-		point = (int)MenuStates::MainMenu;
+		point = static_cast<int>(MenuStates::MainMenu);
 	}
 	ClearBackground(BLACK);
 	BeginDrawing();
@@ -297,7 +297,7 @@ int Options(int& point)
 {
 	if (IsKeyReleased(KEY_ESCAPE))
 	{
-		point = (int)MenuStates::MainMenu;
+		point = static_cast<int>(MenuStates::MainMenu);
 	}
 	ClearBackground(BLACK);
 	BeginDrawing();
